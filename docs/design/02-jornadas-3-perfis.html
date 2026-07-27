@@ -1,0 +1,1170 @@
+<title>CogniKids — Jornadas dos 3 perfis</title>
+
+<style>
+  :root {
+    --ground: #FBFAF8;
+    --surface: #FFFFFF;
+    --sunken: #F3F1ED;
+    --ink: #1C1B1F;
+    --ink-soft: #4A4750;
+    --ink-mute: #655F73;
+    --line: #E2DFD9;
+    --line-strong: #CFCAC2;
+
+    --accent: #5B4B9E;
+    --accent-soft: #EFECFA;
+    --accent-line: #C6BDEC;
+
+    --resp: #9A5B12;
+    --resp-soft: #FBF1E2;
+    --aluno: #5B4B9E;
+    --aluno-soft: #EFECFA;
+    --prof: #1D6E77;
+    --prof-soft: #E4F1F2;
+    --crit: #9B3268;
+    --crit-soft: #FAEBF2;
+
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --measure: 68ch;
+    --pad: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #16141F; --surface: #1E1C29; --sunken: #262336;
+      --ink: #F0EDF7; --ink-soft: #C9C5D2; --ink-mute: #9A93AD;
+      --line: #302E3C; --line-strong: #423F52;
+      --accent: #B3A6F2; --accent-soft: #272042; --accent-line: #453B7A;
+      --resp: #E0A863; --resp-soft: #322512;
+      --aluno: #B3A6F2; --aluno-soft: #272042;
+      --prof: #6FC5CE; --prof-soft: #10292D;
+      --crit: #EE93BC; --crit-soft: #351C29;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #16141F; --surface: #1E1C29; --sunken: #262336;
+    --ink: #F0EDF7; --ink-soft: #C9C5D2; --ink-mute: #9A93AD;
+    --line: #302E3C; --line-strong: #423F52;
+    --accent: #B3A6F2; --accent-soft: #272042; --accent-line: #453B7A;
+    --resp: #E0A863; --resp-soft: #322512;
+    --aluno: #B3A6F2; --aluno-soft: #272042;
+    --prof: #6FC5CE; --prof-soft: #10292D;
+    --crit: #EE93BC; --crit-soft: #351C29;
+  }
+  :root[data-theme="light"] {
+    --ground: #FBFAF8; --surface: #FFFFFF; --sunken: #F3F1ED;
+    --ink: #1C1B1F; --ink-soft: #4A4750; --ink-mute: #655F73;
+    --line: #E2DFD9; --line-strong: #CFCAC2;
+    --accent: #5B4B9E; --accent-soft: #EFECFA; --accent-line: #C6BDEC;
+    --resp: #9A5B12; --resp-soft: #FBF1E2;
+    --aluno: #5B4B9E; --aluno-soft: #EFECFA;
+    --prof: #1D6E77; --prof-soft: #E4F1F2;
+    --crit: #9B3268; --crit-soft: #FAEBF2;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased; margin: 0;
+  }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--pad) 6rem; }
+  .col { max-width: var(--measure); }
+
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; text-wrap: balance; line-height: 1.15; }
+  h1 { font-size: clamp(2.3rem, 5.6vw, 3.7rem); letter-spacing: -0.02em; margin: 0 0 1rem; }
+  h2 { font-size: clamp(1.6rem, 3.2vw, 2.15rem); letter-spacing: -0.015em; margin: 0 0 .4rem; }
+  h3 { font-size: 1.24rem; margin: 2.2rem 0 .5rem; }
+  h4 { font-size: 1rem; font-family: var(--body); font-weight: 700; margin: 1.4rem 0 .35rem; }
+  p { margin: 0 0 1.05rem; }
+  a { color: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--body); font-size: .73rem; font-weight: 700;
+    letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ink-mute); margin: 0 0 .7rem;
+  }
+  .lede { font-size: 1.14rem; color: var(--ink-soft); }
+
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding: clamp(2.6rem, 7vw, 5rem) 0 2.4rem; margin-bottom: 2.6rem;
+  }
+  .masthead .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem 1.4rem;
+    font-size: .82rem; color: var(--ink-mute);
+    margin-top: 1.5rem; padding-top: 1.1rem; border-top: 1px solid var(--line);
+  }
+  .masthead .meta b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---------- jornada ---------- */
+  .journey { margin: 3.4rem 0 0; padding-top: 2.6rem; border-top: 1px solid var(--line); }
+  .journey:first-of-type { border-top: 0; padding-top: 0; }
+
+  .j-head { display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; margin-bottom: .3rem; }
+  .j-badge {
+    font-family: var(--mono); font-size: .72rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: .28em .7em; border-radius: 5px;
+  }
+  .j-resp  { background: var(--resp-soft);  color: var(--resp); }
+  .j-aluno { background: var(--aluno-soft); color: var(--aluno); }
+  .j-prof  { background: var(--prof-soft);  color: var(--prof); }
+
+  /* passo da jornada */
+  .step {
+    display: grid; grid-template-columns: 3.2rem 1fr; gap: 0 1.1rem;
+    margin: 2rem 0 0;
+  }
+  .step-n {
+    font-family: var(--mono); font-size: .88rem; font-weight: 700;
+    color: var(--surface); background: var(--ink-mute);
+    width: 2.1rem; height: 2.1rem; border-radius: 50%;
+    display: grid; place-items: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .j-resp-step  .step-n { background: var(--resp); }
+  .j-aluno-step .step-n { background: var(--aluno); }
+  .j-prof-step  .step-n { background: var(--prof); }
+
+  .step-rail { grid-column: 1; display: grid; justify-items: center; gap: .4rem; }
+  .step-rail::after {
+    content: ""; width: 2px; flex: 1; background: var(--line);
+    min-height: 1rem; height: 100%;
+  }
+  .step:last-child .step-rail::after { display: none; }
+
+  .step-body { grid-column: 2; padding-bottom: .6rem; }
+  .step-body > h4 { margin-top: .15rem; }
+  .step-body p { margin-bottom: .7rem; }
+
+  .api {
+    display: inline-block; font-family: var(--mono); font-size: .76rem;
+    background: var(--sunken); border: 1px solid var(--line);
+    padding: .18em .5em; border-radius: 4px; color: var(--ink-soft);
+    margin: 0 .3rem .3rem 0;
+  }
+  .api.novo { border-color: var(--accent-line); background: var(--accent-soft); color: var(--accent); }
+
+  /* ---------- wireframe ---------- */
+  .wf {
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: 12px; padding: .9rem; margin: 1rem 0 1.3rem;
+  }
+  .wf svg { display: block; width: 100%; height: auto; }
+  .wf-cap { font-size: .78rem; color: var(--ink-mute); margin: .55rem .2rem 0; }
+
+  .s-line { stroke: var(--line-strong); fill: none; }
+  .s-fill { fill: var(--sunken); }
+  .s-white { fill: var(--surface); }
+  .s-acc { fill: var(--accent); }
+  .s-acc-soft { fill: var(--accent-soft); }
+  .s-resp { fill: var(--resp); }
+  .s-prof { fill: var(--prof); }
+  .s-crit { fill: var(--crit); }
+  .s-mute { fill: var(--ink-mute); }
+  .t { font-family: var(--body); font-size: 11px; fill: var(--ink-soft); }
+  .t-sm { font-family: var(--body); font-size: 9px; fill: var(--ink-mute); }
+  .t-lg { font-family: var(--body); font-size: 14px; font-weight: 600; fill: var(--ink); }
+  .t-xl { font-family: var(--body); font-size: 19px; font-weight: 700; fill: var(--ink); }
+  .t-inv { font-family: var(--body); font-size: 11px; fill: var(--surface); }
+  .t-mono { font-family: var(--mono); font-size: 8.5px; fill: var(--ink-mute); }
+
+  /* ---------- notas ---------- */
+  .note {
+    border-left: 3px solid var(--accent-line); background: var(--accent-soft);
+    padding: 1rem 1.2rem; margin: 1.2rem 0; border-radius: 0 6px 6px 0;
+  }
+  .note.crit { border-left-color: var(--crit); background: var(--crit-soft); }
+  .note.resp { border-left-color: var(--resp); background: var(--resp-soft); }
+  .note p:last-child { margin-bottom: 0; }
+  .note .tag {
+    display: block; font-size: .71rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: .4rem; color: var(--ink-soft);
+  }
+
+  .scroll { overflow-x: auto; margin: 1.3rem 0; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 560px; }
+  th, td { text-align: left; padding: .65rem .85rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    background: var(--sunken); font-weight: 700; font-size: .74rem;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  code {
+    font-family: var(--mono); font-size: .85em; background: var(--sunken);
+    padding: .1em .35em; border-radius: 4px; border: 1px solid var(--line);
+  }
+
+  ul, ol { padding-left: 1.2rem; margin: 0 0 1.05rem; }
+  li { margin-bottom: .4rem; }
+  li::marker { color: var(--ink-mute); }
+
+  .toc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; margin-top: 1.8rem; }
+  .toc ol { margin: 0; padding-left: 1.1rem; columns: 2; column-gap: 2rem; }
+  .toc li { margin-bottom: .28rem; break-inside: avoid; }
+  .toc a { text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  @media (max-width: 620px) { .toc ol { columns: 1; } }
+
+  .grid { display: grid; gap: 1rem; margin: 1.4rem 0; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .card h4 { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .k { font-family: var(--mono); font-size: .71rem; color: var(--ink-mute); letter-spacing: .05em; text-transform: uppercase; display: block; margin-bottom: .45rem; }
+
+  footer { border-top: 1px solid var(--line); margin-top: 3.6rem; padding-top: 1.8rem; color: var(--ink-mute); font-size: .85rem; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">CogniKids · Fase 2 · Jornadas de usuário</p>
+  <h1>Três jornadas, uma corrente: o que a família cadastra chega à criança e ao professor</h1>
+  <p class="lede col">Wireframes tela a tela dos três perfis, do primeiro acesso ao uso diário — cada tela ancorada no endpoint que a alimenta. Documento irmão da <a href="https://claude.ai/code/artifact/47dda50b-3381-4c90-93c1-a8dbb0a7bfa4">fundação do front-end</a>.</p>
+  <div class="meta">
+    <span><b>Base</b> 125 rotas · 182 testes verdes</span>
+    <span><b>Telas</b> 21 wireframes · 3 jornadas</span>
+    <span><b>Pendência</b> login acessível do aluno</span>
+    <span><b>Data</b> 26 jul 2026</span>
+  </div>
+
+  <nav class="toc" aria-label="Sumário">
+    <ol>
+      <li><a href="#ordem">Por que esta ordem</a></li>
+      <li><a href="#marca">A paleta e o logo</a></li>
+      <li><a href="#resp">Jornada 1 — Responsável</a></li>
+      <li><a href="#aluno">Jornada 2 — Aluno</a></li>
+      <li><a href="#prof">Jornada 3 — Professor</a></li>
+      <li><a href="#estados">Estados de exceção</a></li>
+      <li><a href="#corrente">A corrente completa</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ===================================================== -->
+<section id="ordem">
+  <h2>Por que esta ordem</h2>
+  <div class="col">
+    <p>As jornadas têm dependência real entre si, e ignorá-la produziria telas que não funcionam:</p>
+    <ul>
+      <li><b>O responsável vem primeiro</b> porque sem o consentimento dele o backend bloqueia tudo — a criança não entra, a pulseira não coleta, o professor não enxerga. E é ele quem preenche o perfil funcional que define <i>como</i> a tela da criança se apresenta.</li>
+      <li><b>O aluno vem em seguida</b> porque sua interface é consequência direta do que o responsável configurou.</li>
+      <li><b>O professor vem por último</b> porque o que ele vê depende do consentimento (jornada 1) e dos pedidos de pausa (jornada 2).</li>
+    </ul>
+  </div>
+  <div class="note">
+    <span class="tag">Convenção deste documento</span>
+    <p>Endpoints marcados como <span class="api novo">POST /api/breaks</span> são os criados nesta fase. Os demais, <span class="api">GET /api/parents/children</span>, já existiam.</p>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section id="marca">
+  <h2>A paleta e o logo</h2>
+  <div class="col">
+    <p>O logo do CogniKids é neon saturado sobre fundo escuro — ciano, magenta e âmbar em brilho máximo, com efeito de brilho difuso. Como identidade institucional funciona; como paleta de interface, colide com o público que definimos como prioritário.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <span class="k">Por que não usar direto</span>
+      <h4>O conflito é técnico, não estético</h4>
+      <p>Saturação alta e brilho são gatilho documentado de sobrecarga sensorial — a razão pela qual o token <code>estimulo: calmo</code> existe. O efeito neon reduz nitidez de borda, prejudicando o processamento visual. E o amarelo sobre roxo do logo não passa em WCAG AA para leitura.</p>
+      <p>A ironia é direta: uma criança que marca “sim” em “incomoda-se com luzes fortes” está pedindo justamente para <b>evitar</b> esse tipo de estímulo.</p>
+    </div>
+    <div class="card">
+      <span class="k">O que foi preservado</span>
+      <h4>As matizes, não a intensidade</h4>
+      <p>A paleta do app deriva das <b>mesmas matizes</b> do logo — ciano, violeta/magenta, âmbar — dessaturadas até passarem em contraste. O app é reconhecível como CogniKids sem sobrecarregar.</p>
+      <p>Os fundos ganharam um viés levemente violáceo, ecoando o roxo do logo. Nenhuma cor é herdada de padrão: todas foram escolhidas e verificadas.</p>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:26%">Papel</th><th style="width:18%">Origem no logo</th><th style="width:14%">Claro</th><th style="width:14%">Escuro</th><th style="width:28%">Contraste verificado</th></tr></thead>
+      <tbody>
+        <tr><td><b>Marca / aluno</b></td><td>magenta-violeta</td><td><code>#5B4B9E</code></td><td><code>#B3A6F2</code></td><td>6,8:1 · 8,4:1 — AA</td></tr>
+        <tr><td><b>Professor / estável</b></td><td>ciano</td><td><code>#1D6E77</code></td><td><code>#6FC5CE</code></td><td>5,7:1 · 9,1:1 — AA</td></tr>
+        <tr><td><b>Responsável / atenção</b></td><td>âmbar</td><td><code>#9A5B12</code></td><td><code>#E0A863</code></td><td>5,2:1 · 8,6:1 — AA</td></tr>
+        <tr><td><b>Prioritário</b></td><td>magenta</td><td><code>#9B3268</code></td><td><code>#EE93BC</code></td><td>6,6:1 · 8,3:1 — AA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">O melhor achado do logo</span>
+    <p>O <b>símbolo do infinito</b> merece virar elemento central da identidade do produto. Ele não é ornamento: o infinito é o símbolo internacional da neurodiversidade, adotado pelo próprio movimento de autodefesa autista. Carrega exatamente o que o projeto quer comunicar — e comunica isso a quem conhece o símbolo, que é justamente o público que precisa confiar no sistema.</p>
+  </div>
+
+  <div class="note resp">
+    <span class="tag">Ponto a considerar</span>
+    <p>O <b>unicórnio</b> tende a ler como infantil. Como você optou por faixa etária ampla com modo adaptável, vale avaliar: um aluno de 13 anos costuma rejeitar essa estética, e rejeição de estética vira rejeição de uso. Uma alternativa é o logo institucional manter o unicórnio (artigo, site, apresentação) e a marca dentro do app usar só o infinito.</p>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section class="journey" id="resp">
+  <div class="j-head">
+    <span class="j-badge j-resp">Jornada 1</span>
+    <h2>Responsável</h2>
+  </div>
+  <p class="col lede">Do convite da escola ao acompanhamento diário. É a porta de entrada legal e técnica do sistema.</p>
+
+  <!-- passo 1 -->
+  <div class="step j-resp-step">
+    <div class="step-rail"><span class="step-n">1</span></div>
+    <div class="step-body">
+      <h4>Entrar e vincular o filho</h4>
+      <p>O responsável cria a conta e vincula a criança pelo e-mail dela. Só com o vínculo estabelecido as telas seguintes fazem sentido.</p>
+      <span class="api">POST /api/register</span>
+      <span class="api">POST /api/parents/link-child</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 300" role="img" aria-label="Tela de vínculo do filho pelo email">
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-line"/>
+          <rect x="276" y="16" width="328" height="268" rx="18" class="s-fill"/>
+          <rect x="276" y="16" width="328" height="268" rx="18" class="s-line"/>
+
+          <text x="300" y="58" class="t-xl">Vincular meu filho</text>
+          <text x="300" y="80" class="t-sm">A escola informou o e-mail cadastrado da criança.</text>
+
+          <text x="300" y="112" class="t">E-mail do seu filho</text>
+          <rect x="300" y="122" width="280" height="42" rx="8" class="s-white"/>
+          <rect x="300" y="122" width="280" height="42" rx="8" class="s-line" stroke-width="2"/>
+          <text x="314" y="148" class="t">ana.sofia@escola.exemplo</text>
+
+          <rect x="300" y="182" width="280" height="46" rx="9" class="s-resp"/>
+          <text x="378" y="210" class="t-inv">Vincular meu filho</text>
+
+          <text x="300" y="256" class="t-sm">Não sabe o e-mail? Peça à secretaria da escola.</text>
+
+          <text x="24" y="120" class="t-mono">SEM BUSCA ABERTA</text>
+          <text x="24" y="138" class="t-sm">Vínculo exige saber o</text>
+          <text x="24" y="152" class="t-sm">e-mail exato. Não há</text>
+          <text x="24" y="166" class="t-sm">lista de alunos para</text>
+          <text x="24" y="180" class="t-sm">navegar — impede</text>
+          <text x="24" y="194" class="t-sm">enumeração de menores.</text>
+
+          <text x="632" y="150" class="t-mono">ERRO CLARO</text>
+          <text x="632" y="168" class="t-sm">E-mail inexistente e</text>
+          <text x="632" y="182" class="t-sm">e-mail de não-aluno dão</text>
+          <text x="632" y="196" class="t-sm">a mesma resposta 404,</text>
+          <text x="632" y="210" class="t-sm">sem revelar quem existe.</text>
+        </svg>
+        <p class="wf-cap"><b>Vincular filho.</b> O backend recusa vincular quem não é estudante e não expõe se o e-mail existe.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- passo 2 -->
+  <div class="step j-resp-step">
+    <div class="step-rail"><span class="step-n">2</span></div>
+    <div class="step-body">
+      <h4>Consentimento — a decisão mais importante da jornada</h4>
+      <p>Quatro finalidades independentes, cada uma explicada no que ela significa na prática. Nenhuma vem marcada por padrão: o backend nega tudo até haver decisão explícita.</p>
+      <span class="api novo">GET /api/consent/terms</span>
+      <span class="api novo">PUT /api/consent/{aluno_id}</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 420" role="img" aria-label="Tela de consentimento com quatro finalidades independentes">
+          <rect x="0" y="0" width="880" height="420" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="420" rx="10" class="s-line"/>
+          <rect x="240" y="14" width="400" height="392" rx="18" class="s-fill"/>
+          <rect x="240" y="14" width="400" height="392" rx="18" class="s-line"/>
+
+          <text x="264" y="52" class="t-xl">O que você autoriza?</text>
+          <text x="264" y="74" class="t-sm">Você pode mudar ou cancelar qualquer item depois.</text>
+
+          <!-- item 1 obrigatorio -->
+          <rect x="264" y="90" width="352" height="62" rx="10" class="s-white"/>
+          <rect x="264" y="90" width="352" height="62" rx="10" class="s-line"/>
+          <rect x="278" y="110" width="22" height="22" rx="5" class="s-resp"/>
+          <text x="283" y="126" class="t-inv">✓</text>
+          <text x="312" y="116" class="t">Usar o aplicativo</text>
+          <text x="312" y="133" class="t-sm">Ana entra, registra como se sente e pede pausa</text>
+          <text x="312" y="147" class="t-sm" style="fill:var(--resp)">necessário para os demais</text>
+
+          <!-- item 2 -->
+          <rect x="264" y="162" width="352" height="62" rx="10" class="s-white"/>
+          <rect x="264" y="162" width="352" height="62" rx="10" class="s-line"/>
+          <rect x="278" y="182" width="22" height="22" rx="5" class="s-resp"/>
+          <text x="283" y="198" class="t-inv">✓</text>
+          <text x="312" y="188" class="t">Coletar dados da pulseira</text>
+          <text x="312" y="205" class="t-sm">Batimentos e movimento. Sem isso o app funciona,</text>
+          <text x="312" y="218" class="t-sm">mas não detecta sinais de desregulação.</text>
+
+          <!-- item 3 -->
+          <rect x="264" y="234" width="352" height="62" rx="10" class="s-white"/>
+          <rect x="264" y="234" width="352" height="62" rx="10" class="s-line"/>
+          <rect x="278" y="254" width="22" height="22" rx="5" class="s-resp"/>
+          <text x="283" y="270" class="t-inv">✓</text>
+          <text x="312" y="260" class="t">Compartilhar com a escola</text>
+          <text x="312" y="277" class="t-sm">A Prof. Carla vê os registros e alertas da Ana</text>
+          <text x="312" y="290" class="t-sm">para apoiá-la durante a aula.</text>
+
+          <!-- item 4 desmarcado -->
+          <rect x="264" y="306" width="352" height="62" rx="10" class="s-white"/>
+          <rect x="264" y="306" width="352" height="62" rx="10" class="s-line"/>
+          <rect x="278" y="326" width="22" height="22" rx="5" class="s-white"/>
+          <rect x="278" y="326" width="22" height="22" rx="5" class="s-line" stroke-width="2"/>
+          <text x="312" y="332" class="t">Usar os dados em pesquisa</text>
+          <text x="312" y="349" class="t-sm">Dados sem identificação, para melhorar o sistema.</text>
+          <text x="312" y="362" class="t-sm">Recusar não muda nada no uso do app.</text>
+
+          <text x="264" y="392" class="t-sm">Versão 1.0.0 do termo · registrada com data e hora</text>
+
+          <text x="20" y="120" class="t-mono">NEGA POR PADRÃO</text>
+          <text x="20" y="138" class="t-sm">Sem consentimento</text>
+          <text x="20" y="152" class="t-sm">registrado, o backend</text>
+          <text x="20" y="166" class="t-sm">bloqueia tudo. Nenhum</text>
+          <text x="20" y="180" class="t-sm">item vem pré-marcado.</text>
+
+          <text x="20" y="230" class="t-mono">DEPENDÊNCIA</text>
+          <text x="20" y="248" class="t-sm">Desmarcar "usar o app"</text>
+          <text x="20" y="262" class="t-sm">derruba os que dependem</text>
+          <text x="20" y="276" class="t-sm">dele, com aviso — não</text>
+          <text x="20" y="290" class="t-sm">falha em silêncio.</text>
+
+          <text x="662" y="330" class="t-mono">SEM PENALIDADE</text>
+          <text x="662" y="348" class="t-sm">Recusar pesquisa não</text>
+          <text x="662" y="362" class="t-sm">afeta nada. Há teste</text>
+          <text x="662" y="376" class="t-sm">automatizado provando.</text>
+          <line x1="618" y1="338" x2="658" y2="338" class="s-line" stroke-dasharray="3 3"/>
+        </svg>
+        <p class="wf-cap"><b>Consentimento granular.</b> Cada finalidade é descrita pelo efeito prático, não por termo jurídico. As mudanças ficam auditadas com de/para, autor e data.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- passo 3 -->
+  <div class="step j-resp-step">
+    <div class="step-rail"><span class="step-n">3</span></div>
+    <div class="step-body">
+      <h4>Perfil funcional — como a tela do filho vai se comportar</h4>
+      <p>Doze perguntas sobre o que o responsável <b>observa no dia a dia</b>. Nenhuma menciona diagnóstico — há teste automatizado que falha se alguma mencionar.</p>
+      <span class="api novo">GET /api/accessibility/questionnaire</span>
+      <span class="api novo">PUT /api/accessibility/{aluno_id}</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 360" role="img" aria-label="Questionário de necessidades observáveis com prévia ao vivo">
+          <rect x="0" y="0" width="880" height="360" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="360" rx="10" class="s-line"/>
+
+          <text x="28" y="42" class="t-xl">Como a Ana é no dia a dia?</text>
+          <text x="28" y="64" class="t-sm">Não precisa de laudo. Responda o que você observa. 3 de 12.</text>
+
+          <!-- barra de progresso -->
+          <rect x="28" y="78" width="500" height="6" rx="3" class="s-fill"/>
+          <rect x="28" y="78" width="125" height="6" rx="3" class="s-resp"/>
+
+          <!-- pergunta -->
+          <rect x="28" y="102" width="500" height="98" rx="10" class="s-white"/>
+          <rect x="28" y="102" width="500" height="98" rx="10" class="s-line"/>
+          <text x="48" y="130" class="t-lg">Ela se incomoda com sons altos ou luzes fortes?</text>
+          <text x="48" y="150" class="t-sm">Por exemplo: tapa os ouvidos, evita lugares barulhentos.</text>
+          <rect x="48" y="160" width="140" height="30" rx="7" class="s-white"/><rect x="48" y="160" width="140" height="30" rx="7" class="s-line"/>
+          <text x="102" y="180" class="t-sm">Não</text>
+          <rect x="196" y="160" width="140" height="30" rx="7" class="s-white"/><rect x="196" y="160" width="140" height="30" rx="7" class="s-line"/>
+          <text x="240" y="180" class="t-sm">Às vezes</text>
+          <rect x="344" y="160" width="140" height="30" rx="7" class="s-resp"/>
+          <text x="404" y="180" class="t-inv">Sim</text>
+
+          <!-- pergunta 2 -->
+          <rect x="28" y="212" width="500" height="76" rx="10" class="s-white"/>
+          <rect x="28" y="212" width="500" height="76" rx="10" class="s-line"/>
+          <text x="48" y="238" class="t-lg">Ela lê sozinha com facilidade?</text>
+          <rect x="48" y="250" width="140" height="28" rx="7" class="s-resp"/>
+          <text x="74" y="269" class="t-inv">Ainda não lê</text>
+          <rect x="196" y="250" width="140" height="28" rx="7" class="s-white"/><rect x="196" y="250" width="140" height="28" rx="7" class="s-line"/>
+          <text x="222" y="269" class="t-sm">Com esforço</text>
+          <rect x="344" y="250" width="140" height="28" rx="7" class="s-white"/><rect x="344" y="250" width="140" height="28" rx="7" class="s-line"/>
+          <text x="382" y="269" class="t-sm">Lê sozinha</text>
+
+          <text x="28" y="322" class="t-sm">Pode pular qualquer pergunta e voltar depois.</text>
+
+          <!-- previa -->
+          <rect x="560" y="102" width="296" height="220" rx="12" class="s-fill"/>
+          <rect x="560" y="102" width="296" height="220" rx="12" class="s-line"/>
+          <text x="580" y="128" class="t">Como a tela da Ana fica</text>
+          <text x="580" y="145" class="t-sm">Atualiza enquanto você responde</text>
+
+          <rect x="580" y="158" width="256" height="60" rx="10" class="s-acc"/>
+          <circle cx="612" cy="188" r="17" class="s-white" opacity=".9"/>
+          <text x="605" y="194" style="font-size:16px">🙂</text>
+          <text x="640" y="194" class="t-inv">Como estou</text>
+
+          <rect x="580" y="228" width="256" height="60" rx="10" class="s-white"/>
+          <rect x="580" y="228" width="256" height="60" rx="10" class="s-line" stroke-width="2"/>
+          <circle cx="612" cy="258" r="17" class="s-acc-soft"/>
+          <text x="605" y="264" style="font-size:16px">🌿</text>
+          <text x="640" y="264" class="t">Preciso de pausa</text>
+
+          <text x="580" y="310" class="t-sm">Sem texto pequeno · cores calmas · botões grandes</text>
+        </svg>
+        <p class="wf-cap"><b>Perfil funcional com prévia ao vivo.</b> O responsável vê o efeito de cada resposta na tela da criança — não precisa imaginar o resultado, requisito de carga de memória do W3C.</p>
+      </div>
+
+      <div class="note resp">
+        <span class="tag">Conflito resolvido no backend</span>
+        <p>Se o responsável marcar “incomoda-se com sons altos” <b>e</b> “perde interesse quando é parado”, os dois pedem valores opostos de estímulo. O backend resolve para <code>calmo</code> — vence sempre o mais protetivo. A prévia reflete essa decisão na hora.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- passo 4 -->
+  <div class="step j-resp-step">
+    <div class="step-rail"><span class="step-n">4</span></div>
+    <div class="step-body">
+      <h4>Kit de apoio — o que a família sabe e a escola não</h4>
+      <p>Estratégias que funcionam em casa, gatilhos conhecidos e contatos. É o ponto de maior agência do responsável: o que ele escreve aqui aparece <b>na tela da criança</b> quando ela pede pausa, e <b>no alerta do professor</b>.</p>
+      <span class="api">PUT /api/support-kit/{aluno_id}</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 320" role="img" aria-label="Kit de apoio com estratégias e gatilhos">
+          <rect x="0" y="0" width="880" height="320" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="320" rx="10" class="s-line"/>
+
+          <text x="28" y="42" class="t-xl">Kit de apoio da Ana</text>
+          <text x="28" y="64" class="t-sm">O que ajuda quando ela precisa. Só você e a Prof. Carla veem.</text>
+
+          <text x="28" y="98" class="t">O que acalma a Ana</text>
+          <rect x="28" y="108" width="400" height="36" rx="8" class="s-white"/><rect x="28" y="108" width="400" height="36" rx="8" class="s-line"/>
+          <text x="44" y="131" style="font-size:14px">🎧</text>
+          <text x="70" y="131" class="t">Fone abafador</text>
+          <text x="390" y="131" class="t-sm">✕</text>
+
+          <rect x="28" y="152" width="400" height="36" rx="8" class="s-white"/><rect x="28" y="152" width="400" height="36" rx="8" class="s-line"/>
+          <text x="44" y="175" style="font-size:14px">🚪</text>
+          <text x="70" y="175" class="t">Sala de calma</text>
+          <text x="390" y="175" class="t-sm">✕</text>
+
+          <rect x="28" y="196" width="400" height="34" rx="8" class="s-resp-soft" style="fill:var(--resp-soft)"/>
+          <text x="46" y="218" class="t" style="fill:var(--resp)">+ Adicionar outra estratégia</text>
+
+          <text x="28" y="262" class="t">O que costuma desencadear</text>
+          <rect x="28" y="272" width="400" height="34" rx="8" class="s-white"/><rect x="28" y="272" width="400" height="34" rx="8" class="s-line"/>
+          <text x="44" y="294" class="t-sm">Ruído alto, mudança de rotina sem aviso</text>
+
+          <!-- para onde vai -->
+          <rect x="466" y="98" width="386" height="208" rx="12" class="s-fill"/>
+          <rect x="466" y="98" width="386" height="208" rx="12" class="s-line"/>
+          <text x="488" y="126" class="t">Para onde isso vai</text>
+
+          <rect x="488" y="142" width="342" height="62" rx="9" class="s-white"/>
+          <rect x="488" y="142" width="342" height="62" rx="9" class="s-line"/>
+          <text x="506" y="166" class="t" style="fill:var(--accent)">→ Tela da Ana</text>
+          <text x="506" y="184" class="t-sm">Vira as opções que ela escolhe ao pedir pausa,</text>
+          <text x="506" y="197" class="t-sm">ordenadas pelo que já funcionou.</text>
+
+          <rect x="488" y="216" width="342" height="62" rx="9" class="s-white"/>
+          <rect x="488" y="216" width="342" height="62" rx="9" class="s-line"/>
+          <text x="506" y="240" class="t" style="fill:var(--prof)">→ Alerta da Prof. Carla</text>
+          <text x="506" y="258" class="t-sm">O alerta chega com a estratégia junto, não só</text>
+          <text x="506" y="271" class="t-sm">com o aviso de que algo aconteceu.</text>
+        </svg>
+        <p class="wf-cap"><b>Kit de apoio.</b> Mostrar “para onde isso vai” não é decoração: é o que faz o responsável entender por que vale a pena preencher com cuidado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- passo 5 -->
+  <div class="step j-resp-step">
+    <div class="step-rail"><span class="step-n">5</span></div>
+    <div class="step-body">
+      <h4>Uso diário — “meu filho está bem?”</h4>
+      <p>Depois do onboarding, a tela responde uma pergunta só, e responde em linguagem comum. Sem gráfico de BPM: o responsável não é clínico e não deve interpretar biometria.</p>
+      <span class="api">GET /api/parents/dashboard</span>
+      <span class="api">GET /api/parents/children/{id}/alerts</span>
+      <span class="api novo">GET /api/breaks/student/{id}</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 350" role="img" aria-label="Painel diário do responsável">
+          <rect x="0" y="0" width="880" height="350" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="350" rx="10" class="s-line"/>
+          <rect x="276" y="14" width="328" height="322" rx="18" class="s-fill"/>
+          <rect x="276" y="14" width="328" height="322" rx="18" class="s-line"/>
+
+          <text x="300" y="48" class="t-lg">Ana Sofia</text>
+          <text x="300" y="66" class="t-sm">3º Ano B · Prof. Carla Souza</text>
+
+          <rect x="300" y="82" width="280" height="72" rx="12" style="fill:var(--prof-soft)"/>
+          <text x="320" y="110" class="t-lg">Dia tranquilo até agora</text>
+          <text x="320" y="130" class="t-sm">Marcou “bem” de manhã e pediu</text>
+          <text x="320" y="144" class="t-sm">uma pausa às 10:14.</text>
+
+          <text x="300" y="180" class="t">Últimos 7 dias</text>
+          <rect x="300" y="190" width="30" height="32" rx="5" style="fill:var(--prof-soft)"/><text x="308" y="236" class="t-sm">seg</text>
+          <rect x="338" y="190" width="30" height="32" rx="5" style="fill:var(--prof-soft)"/><text x="347" y="236" class="t-sm">ter</text>
+          <rect x="376" y="190" width="30" height="32" rx="5" style="fill:var(--resp-soft)"/><text x="385" y="236" class="t-sm">qua</text>
+          <rect x="414" y="190" width="30" height="32" rx="5" style="fill:var(--prof-soft)"/><text x="423" y="236" class="t-sm">qui</text>
+          <rect x="452" y="190" width="30" height="32" rx="5" style="fill:var(--crit-soft)"/><text x="461" y="236" class="t-sm">sex</text>
+          <rect x="490" y="190" width="30" height="32" rx="5" class="s-fill"/><text x="500" y="236" class="t-sm">sáb</text>
+          <rect x="528" y="190" width="30" height="32" rx="5" style="fill:var(--prof-soft)"/><text x="538" y="236" class="t-sm">seg</text>
+
+          <line x1="300" y1="254" x2="580" y2="254" class="s-line"/>
+          <text x="300" y="280" class="t">Kit de apoio</text>
+          <rect x="300" y="290" width="280" height="34" rx="8" class="s-white"/><rect x="300" y="290" width="280" height="34" rx="8" class="s-line"/>
+          <text x="316" y="312" style="font-size:13px">🎧</text>
+          <text x="340" y="307" class="t-sm">Fone abafador</text>
+          <text x="340" y="319" class="t-sm" style="fill:var(--prof)">funcionou 3× esta semana</text>
+
+          <text x="24" y="110" class="t-mono">LINGUAGEM</text>
+          <text x="24" y="128" class="t-sm">“Dia tranquilo”, não</text>
+          <text x="24" y="142" class="t-sm">“0 episódios de crise”.</text>
+          <text x="24" y="156" class="t-sm">Sem estética de</text>
+          <text x="24" y="170" class="t-sm">prontuário.</text>
+
+          <text x="24" y="212" class="t-mono">SEM BIOMETRIA</text>
+          <text x="24" y="230" class="t-sm">Faixas de cor, não linha</text>
+          <text x="24" y="244" class="t-sm">de BPM.</text>
+
+          <text x="632" y="300" class="t-mono">CICLO FECHADO</text>
+          <text x="632" y="318" class="t-sm">A eficácia vem dos</text>
+          <text x="632" y="332" class="t-sm">pedidos de pausa reais.</text>
+          <line x1="588" y1="308" x2="628" y2="308" class="s-line" stroke-dasharray="3 3"/>
+        </svg>
+        <p class="wf-cap"><b>Painel do responsável.</b> A semana usa faixas de cor, não série temporal — comunica tendência sem convidar à autodiagnose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section class="journey" id="aluno">
+  <div class="j-head">
+    <span class="j-badge j-aluno">Jornada 2</span>
+    <h2>Aluno</h2>
+  </div>
+  <p class="col lede">O perfil de maior cuidado — e o que nunca existiu no front atual. Navegação rasa, nenhuma informação biométrica, ações antes de relatórios.</p>
+
+  <div class="step j-aluno-step">
+    <div class="step-rail"><span class="step-n">1</span></div>
+    <div class="step-body">
+      <h4>Primeiro acesso — a interface já chega adaptada</h4>
+      <p>A criança não configura nada para começar. O app carrega os tokens derivados do perfil que o responsável preencheu e se apresenta pronto.</p>
+      <span class="api novo">GET /api/accessibility/me</span>
+
+      <div class="note crit">
+        <span class="tag">Pendência de backend</span>
+        <p>O login ainda é e-mail e senha, o que exclui criança em alfabetização — o W3C recomenda explicitamente login que não dependa de memória. As alternativas (QR pelo professor, PIN por imagens, dispositivo confiável) aguardam sua decisão e exigem rota nova.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-aluno-step">
+    <div class="step-rail"><span class="step-n">2</span></div>
+    <div class="step-body">
+      <h4>Meu dia — duas ações, nada escondido</h4>
+      <p>A tela inicial não é um relatório sobre a criança: são as ações que ela pode tomar. O status da pulseira é informação de primeira classe, com quem vê nomeado e o desligar ao alcance.</p>
+      <span class="api">GET /api/students/feelings</span>
+      <span class="api novo">GET /api/breaks/mine</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 300" role="img" aria-label="Comparação da tela inicial em modo calmo e modo vivo">
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-line"/>
+
+          <text x="28" y="34" class="t">Mesma tela, dois perfis funcionais diferentes</text>
+
+          <!-- variante calmo -->
+          <text x="60" y="60" class="t-mono">ESTÍMULO CALMO · SÓ FIGURA</text>
+          <rect x="60" y="70" width="300" height="204" rx="16" class="s-fill"/>
+          <rect x="60" y="70" width="300" height="204" rx="16" class="s-line"/>
+          <text x="82" y="100" class="t-lg">Oi, Ana</text>
+
+          <rect x="82" y="114" width="256" height="66" rx="12" class="s-acc"/>
+          <circle cx="122" cy="147" r="19" class="s-white" opacity=".9"/>
+          <text x="115" y="153" style="font-size:17px">🙂</text>
+          <text x="152" y="152" class="t-inv">Como estou</text>
+
+          <rect x="82" y="190" width="256" height="66" rx="12" class="s-white"/>
+          <rect x="82" y="190" width="256" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <circle cx="122" cy="223" r="19" class="s-acc-soft"/>
+          <text x="115" y="229" style="font-size:17px">🌿</text>
+          <text x="152" y="228" class="t">Preciso de pausa</text>
+
+          <!-- variante vivo -->
+          <text x="512" y="60" class="t-mono">ESTÍMULO VIVO · FIGURA + LETRA</text>
+          <rect x="512" y="70" width="300" height="204" rx="16" class="s-fill"/>
+          <rect x="512" y="70" width="300" height="204" rx="16" class="s-line"/>
+          <text x="534" y="100" class="t-lg">Oi, Lucas! 👋</text>
+
+          <rect x="534" y="114" width="122" height="66" rx="12" class="s-acc"/>
+          <text x="562" y="146" style="font-size:19px">🙂</text>
+          <text x="548" y="168" class="t-inv">Como estou</text>
+
+          <rect x="668" y="114" width="122" height="66" rx="12" style="fill:var(--prof)"/>
+          <text x="696" y="146" style="font-size:19px">🌿</text>
+          <text x="686" y="168" class="t-inv">Pausa</text>
+
+          <rect x="534" y="190" width="122" height="66" rx="12" style="fill:var(--resp)"/>
+          <text x="562" y="222" style="font-size:19px">⭐</text>
+          <text x="552" y="244" class="t-inv">Desafios</text>
+
+          <rect x="668" y="190" width="122" height="66" rx="12" class="s-white"/>
+          <rect x="668" y="190" width="122" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="696" y="222" style="font-size:19px">📅</text>
+          <text x="690" y="244" class="t">Agenda</text>
+
+          <line x1="436" y1="70" x2="436" y2="274" class="s-line" stroke-dasharray="4 4"/>
+        </svg>
+        <p class="wf-cap"><b>A mesma tela em dois perfis.</b> À esquerda, criança com sensibilidade sensorial: duas ações, cor única, alvos enormes. À direita, criança que se desengaja de telas neutras: mais opções visíveis, cor variada. Nenhum código de tela é duplicado — só os tokens mudam.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-aluno-step">
+    <div class="step-rail"><span class="step-n">3</span></div>
+    <div class="step-body">
+      <h4>Como estou — registrar sem ser julgado</h4>
+      <p>Seis opções em grade rasa, sem escala numérica (abstração numérica é barreira cognitiva documentada). Nenhuma opção é “certa”: não há carinha verde nem vermelha, nem pontuação, nem sequência a manter.</p>
+      <span class="api">POST /api/students/feelings</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 330" role="img" aria-label="Grade de sentimentos com opção de recusa">
+          <rect x="0" y="0" width="880" height="330" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="330" rx="10" class="s-line"/>
+          <rect x="276" y="14" width="328" height="302" rx="18" class="s-fill"/>
+          <rect x="276" y="14" width="328" height="302" rx="18" class="s-line"/>
+
+          <text x="300" y="46" class="t-sm">← Voltar</text>
+          <text x="300" y="76" class="t-xl">Como você está?</text>
+
+          <rect x="300" y="92" width="132" height="66" rx="12" class="s-white"/><rect x="300" y="92" width="132" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="318" y="128" style="font-size:20px">😀</text><text x="350" y="132" class="t">Bem</text>
+
+          <rect x="448" y="92" width="132" height="66" rx="12" class="s-white"/><rect x="448" y="92" width="132" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="466" y="128" style="font-size:20px">😐</text><text x="498" y="132" class="t">Mais ou menos</text>
+
+          <rect x="300" y="170" width="132" height="66" rx="12" class="s-white"/><rect x="300" y="170" width="132" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="318" y="206" style="font-size:20px">😟</text><text x="350" y="210" class="t">Preocupado</text>
+
+          <rect x="448" y="170" width="132" height="66" rx="12" class="s-acc-soft"/>
+          <rect x="448" y="170" width="132" height="66" rx="12" style="stroke:var(--accent);fill:none" stroke-width="3"/>
+          <text x="466" y="206" style="font-size:20px">😣</text><text x="498" y="210" class="t">Difícil</text>
+
+          <rect x="300" y="248" width="132" height="66" rx="12" class="s-white"/><rect x="300" y="248" width="132" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="318" y="284" style="font-size:20px">😴</text><text x="350" y="288" class="t">Cansado</text>
+
+          <rect x="448" y="248" width="132" height="66" rx="12" class="s-white"/><rect x="448" y="248" width="132" height="66" rx="12" class="s-line" stroke-width="2"/>
+          <text x="466" y="284" style="font-size:20px">🤐</text><text x="498" y="288" class="t">Não quero dizer</text>
+
+          <text x="24" y="130" class="t-mono">SEM JULGAMENTO</text>
+          <text x="24" y="148" class="t-sm">Nenhuma opção é errada.</text>
+          <text x="24" y="162" class="t-sm">Sem pontos, sem streak,</text>
+          <text x="24" y="176" class="t-sm">sem comparação — o dia</text>
+          <text x="24" y="190" class="t-sm">ruim não é punido.</text>
+
+          <text x="632" y="270" class="t-mono">RECUSAR É DIREITO</text>
+          <text x="632" y="288" class="t-sm">“Não quero dizer” é</text>
+          <text x="632" y="302" class="t-sm">resposta legítima, não</text>
+          <text x="632" y="316" class="t-sm">falha de engajamento.</text>
+          <line x1="586" y1="278" x2="628" y2="278" class="s-line" stroke-dasharray="3 3"/>
+        </svg>
+        <p class="wf-cap"><b>Como estou.</b> A opção de recusa é exigência do pilar <i>Autonomy</i>: um sistema que não aceita “não” treina a criança a que sua recusa não conta.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-aluno-step">
+    <div class="step-rail"><span class="step-n">4</span></div>
+    <div class="step-body">
+      <h4>Preciso de pausa — o momento crítico</h4>
+      <p>As estratégias vêm do kit que o responsável preencheu, ordenadas pelo que já funcionou para <b>aquela</b> criança. E há sempre a saída de avisar sem escolher: em desregulação, escolher já pode ser demais.</p>
+      <span class="api novo">GET /api/breaks/options</span>
+      <span class="api novo">POST /api/breaks</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 330" role="img" aria-label="Tela de pedido de pausa e confirmação">
+          <rect x="0" y="0" width="880" height="330" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="330" rx="10" class="s-line"/>
+
+          <!-- escolha -->
+          <rect x="72" y="14" width="328" height="302" rx="18" class="s-fill"/>
+          <rect x="72" y="14" width="328" height="302" rx="18" class="s-line"/>
+          <text x="96" y="48" class="t-sm">← Voltar</text>
+          <text x="96" y="78" class="t-xl">Pedir uma pausa</text>
+          <text x="96" y="98" class="t-sm">A Prof. Carla vai saber. Não precisa explicar.</text>
+
+          <rect x="96" y="112" width="280" height="56" rx="11" class="s-white"/><rect x="96" y="112" width="280" height="56" rx="11" class="s-line" stroke-width="2"/>
+          <text x="114" y="146" style="font-size:17px">🎧</text>
+          <text x="146" y="137" class="t">Fone abafador</text>
+          <text x="146" y="154" class="t-sm" style="fill:var(--prof)">funcionou nas últimas 3 vezes</text>
+
+          <rect x="96" y="178" width="280" height="56" rx="11" class="s-white"/><rect x="96" y="178" width="280" height="56" rx="11" class="s-line" stroke-width="2"/>
+          <text x="114" y="212" style="font-size:17px">🚪</text>
+          <text x="146" y="203" class="t">Sala de calma</text>
+          <text x="146" y="220" class="t-sm">sair da sala um pouco</text>
+
+          <rect x="96" y="244" width="280" height="40" rx="11" class="s-acc-soft"/>
+          <text x="118" y="269" class="t" style="fill:var(--accent)">Só quero avisar →</text>
+
+          <!-- seta -->
+          <text x="424" y="170" class="t-lg" style="fill:var(--ink-mute)">→</text>
+
+          <!-- confirmacao -->
+          <rect x="472" y="14" width="328" height="302" rx="18" class="s-fill"/>
+          <rect x="472" y="14" width="328" height="302" rx="18" class="s-line"/>
+          <circle cx="636" cy="110" r="38" style="fill:var(--prof-soft)"/>
+          <text x="620" y="124" style="font-size:30px">🌿</text>
+          <text x="516" y="180" class="t-xl">Pronto, avisamos.</text>
+          <text x="516" y="206" class="t">Você pode ficar tranquilo.</text>
+          <text x="516" y="228" class="t-sm">A Prof. Carla já sabe que você precisa</text>
+          <text x="516" y="242" class="t-sm">de um tempo.</text>
+
+          <rect x="516" y="262" width="240" height="42" rx="10" class="s-white"/>
+          <rect x="516" y="262" width="240" height="42" rx="10" class="s-line" stroke-width="2"/>
+          <text x="590" y="288" class="t">Voltar ao início</text>
+
+          <text x="512" y="326" class="t-sm"></text>
+        </svg>
+        <p class="wf-cap"><b>Pausa em dois toques.</b> A confirmação não pede nada de volta — nem avaliação, nem explicação. O “já funcionou 3 vezes” vem do histórico real registrado em <code>/api/breaks/{id}/close</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-aluno-step">
+    <div class="step-rail"><span class="step-n">5</span></div>
+    <div class="step-body">
+      <h4>Painel de conforto — autonomia dentro de limites</h4>
+      <p>A criança ajusta três eixos: estímulo, densidade e texto. Os demais tokens são proteções definidas pelo responsável, e o backend <b>ignora</b> tentativas de alterá-los — desligar a confirmação de ações por toque acidental anularia a proteção de quem tem movimento involuntário.</p>
+      <span class="api novo">PUT /api/accessibility/me/comfort</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 230" role="img" aria-label="Painel de conforto com três controles ajustáveis pela criança">
+          <rect x="0" y="0" width="880" height="230" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="230" rx="10" class="s-line"/>
+          <text x="28" y="40" class="t-xl">Como você prefere ver o app?</text>
+          <text x="28" y="60" class="t-sm">Pode mudar quando quiser. Ninguém é avisado.</text>
+
+          <text x="28" y="94" class="t">Cores e movimento</text>
+          <rect x="28" y="104" width="248" height="44" rx="9" class="s-acc-soft"/>
+          <rect x="34" y="110" width="76" height="32" rx="7" class="s-acc"/>
+          <text x="48" y="131" class="t-inv">Calmo</text>
+          <text x="128" y="131" class="t-sm">Médio</text>
+          <text x="206" y="131" class="t-sm">Vivo</text>
+
+          <text x="308" y="94" class="t">Quanta coisa na tela</text>
+          <rect x="308" y="104" width="248" height="44" rx="9" class="s-fill"/>
+          <text x="326" y="131" class="t-sm">Pouca</text>
+          <rect x="388" y="110" width="80" height="32" rx="7" class="s-acc"/>
+          <text x="404" y="131" class="t-inv">Média</text>
+          <text x="486" y="131" class="t-sm">Tudo</text>
+
+          <text x="588" y="94" class="t">Texto</text>
+          <rect x="588" y="104" width="256" height="44" rx="9" class="s-fill"/>
+          <rect x="594" y="110" width="94" height="32" rx="7" class="s-acc"/>
+          <text x="604" y="131" class="t-inv">Só figura</text>
+          <text x="700" y="131" class="t-sm">Figura + letra</text>
+
+          <line x1="28" y1="172" x2="852" y2="172" class="s-line"/>
+          <text x="28" y="198" class="t-sm">A tela muda enquanto você escolhe. Não precisa salvar.</text>
+          <text x="28" y="216" class="t-sm" style="fill:var(--ink-mute)">Tamanho dos botões e confirmações continuam como sua família configurou.</text>
+        </svg>
+        <p class="wf-cap"><b>Painel de conforto.</b> A última linha é deliberada: a criança sabe que existem ajustes que ela não controla, e por quê — em vez de descobrir que um controle “não funciona”.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section class="journey" id="prof">
+  <div class="j-head">
+    <span class="j-badge j-prof">Jornada 3</span>
+    <h2>Professor</h2>
+  </div>
+  <p class="col lede">Ferramenta de trabalho: densa, escaneada em segundos entre uma atividade e outra. O alerta precisa levar a uma ação, não a um número.</p>
+
+  <div class="step j-prof-step">
+    <div class="step-rail"><span class="step-n">1</span></div>
+    <div class="step-body">
+      <h4>Painel da turma — quem precisa de atenção primeiro</h4>
+      <p>Ordenado por necessidade, não alfabeticamente. Pedido de pausa aparece no topo porque é sinal explícito da criança, mais confiável que inferência de sensor.</p>
+      <span class="api">GET /api/teachers/all_students</span>
+      <span class="api">GET /api/teachers/crisis_alerts</span>
+      <span class="api novo">GET /api/breaks/pending</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 430" role="img" aria-label="Painel do professor com pedido de pausa e alerta">
+          <rect x="0" y="0" width="880" height="430" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="430" rx="10" class="s-line"/>
+          <rect x="1" y="1" width="878" height="48" rx="10" class="s-fill"/>
+          <text x="24" y="31" class="t-lg">3º Ano B · 24 alunos</text>
+          <circle cx="836" cy="25" r="12" class="s-acc-soft"/><text x="831" y="29" class="t-sm">CS</text>
+
+          <!-- pedido de pausa -->
+          <rect x="24" y="66" width="832" height="76" rx="10" style="fill:var(--prof-soft)"/>
+          <rect x="24" y="66" width="5" height="76" rx="2.5" class="s-prof"/>
+          <text x="46" y="92" class="t-lg">Ana Sofia pediu uma pausa</text>
+          <text x="46" y="112" class="t">Escolheu: fone abafador · há 2 minutos</text>
+          <text x="46" y="130" class="t-sm">Ela avisou por conta própria. Não precisa explicar nada a você.</text>
+          <rect x="656" y="86" width="88" height="32" rx="8" class="s-prof"/>
+          <text x="672" y="107" class="t-inv">Já vi</text>
+          <rect x="756" y="86" width="96" height="32" rx="8" class="s-white"/><rect x="756" y="86" width="96" height="32" rx="8" class="s-line"/>
+          <text x="774" y="107" class="t-sm">Encerrar</text>
+
+          <!-- alerta ML -->
+          <rect x="24" y="154" width="832" height="86" rx="10" style="fill:var(--crit-soft)"/>
+          <rect x="24" y="154" width="5" height="86" rx="2.5" class="s-crit"/>
+          <text x="46" y="180" class="t-lg">Lucas Silva pode precisar de apoio</text>
+          <text x="46" y="200" class="t">Sinais de desregulação há 4 minutos · confiança 91%</text>
+          <text x="46" y="218" class="t-sm">No kit dele: sala de calma, beber água. Gatilho conhecido: mudança de rotina.</text>
+          <rect x="640" y="178" width="104" height="32" rx="8" class="s-crit"/>
+          <text x="654" y="199" class="t-inv">Ver o que fazer</text>
+          <rect x="756" y="178" width="96" height="32" rx="8" class="s-white"/><rect x="756" y="178" width="96" height="32" rx="8" class="s-line"/>
+          <text x="772" y="199" class="t-sm">Já resolvi</text>
+
+          <text x="24" y="272" class="t">Turma</text>
+          <line x1="24" y1="282" x2="856" y2="282" class="s-line"/>
+
+          <rect x="24" y="292" width="832" height="42" rx="8" class="s-fill"/>
+          <circle cx="48" cy="313" r="6" class="s-prof"/>
+          <text x="68" y="310" class="t">Ana Sofia</text><text x="68" y="326" class="t-sm">Marcou “difícil” às 10:12 · pausa pedida 10:14</text>
+
+          <rect x="24" y="342" width="832" height="42" rx="8" class="s-white"/>
+          <circle cx="48" cy="363" r="6" style="fill:var(--line-strong)"/>
+          <text x="68" y="360" class="t">Beatriz Nunes</text><text x="68" y="376" class="t-sm">Marcou “bem” às 9:05</text>
+
+          <rect x="24" y="392" width="832" height="34" rx="8" class="s-white"/>
+          <circle cx="48" cy="409" r="6" style="fill:var(--line-strong)"/>
+          <text x="68" y="413" class="t-sm">Diogo Martins · pulseira desligada · sem registro hoje</text>
+        </svg>
+        <p class="wf-cap"><b>Painel da turma.</b> Pedido de pausa (verde) acima do alerta de ML (vermelho): sinal explícito da criança vale mais que inferência. “Pulseira desligada” é estado neutro, jamais falha do aluno.</p>
+      </div>
+
+      <div class="note">
+        <span class="tag">Decisão de UI</span>
+        <p>Note o que o alerta <b>não</b> mostra: “BPM 155, GSR 4.8”. Número biométrico bruto não informa decisão pedagógica e empurra o professor para uma leitura clínica que ele não tem formação para fazer. O dado continua na tela de detalhe, para auditoria.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-prof-step">
+    <div class="step-rail"><span class="step-n">2</span></div>
+    <div class="step-body">
+      <h4>O que fazer — o alerta que vira ação</h4>
+      <p>O professor não recebe um diagnóstico: recebe o que a família já testou e funcionou. É aqui que a corrente família→escola se fecha.</p>
+      <span class="api">GET /api/support-kit/{aluno_id}</span>
+      <span class="api novo">PUT /api/breaks/{id}/close</span>
+
+      <div class="wf">
+        <svg viewBox="0 0 880 300" role="img" aria-label="Painel de ação com estratégias do kit de apoio">
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-white"/>
+          <rect x="0" y="0" width="880" height="300" rx="10" class="s-line"/>
+
+          <text x="28" y="42" class="t-xl">Apoiar o Lucas agora</text>
+          <text x="28" y="64" class="t-sm">O que a família dele diz que funciona:</text>
+
+          <rect x="28" y="80" width="400" height="58" rx="10" class="s-white"/><rect x="28" y="80" width="400" height="58" rx="10" class="s-line" stroke-width="2"/>
+          <text x="48" y="114" style="font-size:17px">🚪</text>
+          <text x="80" y="106" class="t">Levar à sala de calma</text>
+          <text x="80" y="123" class="t-sm" style="fill:var(--prof)">funcionou 4 das últimas 5 vezes</text>
+
+          <rect x="28" y="148" width="400" height="58" rx="10" class="s-white"/><rect x="28" y="148" width="400" height="58" rx="10" class="s-line"/>
+          <text x="48" y="182" style="font-size:17px">💧</text>
+          <text x="80" y="174" class="t">Oferecer água</text>
+          <text x="80" y="191" class="t-sm">funcionou 1 de 3 vezes</text>
+
+          <rect x="28" y="222" width="400" height="52" rx="10" class="s-fill"/>
+          <text x="48" y="244" class="t-sm">Gatilho conhecido: mudança de rotina sem aviso</text>
+          <text x="48" y="262" class="t-sm">Hoje houve troca de sala às 10:00.</text>
+
+          <rect x="460" y="80" width="392" height="194" rx="12" class="s-fill"/>
+          <rect x="460" y="80" width="392" height="194" rx="12" class="s-line"/>
+          <text x="482" y="108" class="t">Depois de apoiar, registre</text>
+          <text x="482" y="128" class="t-sm">Isso melhora a sugestão da próxima vez —</text>
+          <text x="482" y="142" class="t-sm">para o Lucas e para a tela dele.</text>
+
+          <rect x="482" y="158" width="348" height="44" rx="9" class="s-prof"/>
+          <text x="592" y="185" class="t-inv">Ajudou</text>
+
+          <rect x="482" y="212" width="348" height="44" rx="9" class="s-white"/>
+          <rect x="482" y="212" width="348" height="44" rx="9" class="s-line" stroke-width="2"/>
+          <text x="576" y="239" class="t">Não ajudou desta vez</text>
+        </svg>
+        <p class="wf-cap"><b>Do alerta à ação.</b> Registrar o resultado não é burocracia: é o que reordena as opções na tela da criança e no próximo alerta. Sem esse retorno, a personalização não existe.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step j-prof-step">
+    <div class="step-rail"><span class="step-n">3</span></div>
+    <div class="step-body">
+      <h4>Aluno em detalhe — onde o dado técnico vive</h4>
+      <p>Aqui sim aparecem biometria, histórico completo e o perfil funcional. É a tela de auditoria e de conversa com a família, não a de uso momentâneo.</p>
+      <span class="api">GET /api/teachers/students/{id}/alerts_history</span>
+      <span class="api">GET /api/iot/registros/{aluno_id}</span>
+      <span class="api novo">GET /api/accessibility/{aluno_id}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section class="journey" id="estados">
+  <h2>Estados de exceção</h2>
+  <p class="col lede">O que normalmente falta em wireframe e sempre aparece em produção. Cada estado abaixo corresponde a um comportamento já implementado no backend.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:22%">Situação</th><th style="width:14%">Perfil</th><th style="width:34%">O que a tela mostra</th><th style="width:30%">Por quê</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Sem consentimento</b></td>
+          <td>professor</td>
+          <td>Aluno simplesmente não aparece na lista. Sem placeholder, sem “bloqueado”.</td>
+          <td>Exibir “dados protegidos” já revelaria que a criança existe e que a família recusou — informação que não lhe pertence.</td>
+        </tr>
+        <tr>
+          <td><b>Consentimento revogado durante o uso</b></td>
+          <td>professor</td>
+          <td>Alertas param de chegar; ao abrir um histórico antigo, mensagem de acesso não autorizado.</td>
+          <td>Revogação tem efeito imediato (LGPD art. 8º §5º), inclusive sobre sessão já aberta.</td>
+        </tr>
+        <tr>
+          <td><b>Pulseira sem consentimento</b></td>
+          <td>—</td>
+          <td>A leitura é descartada na porta de entrada; o dispositivo não recebe erro que exponha o motivo ao portador.</td>
+          <td>Sem base legal não há tratamento. Bloqueio na API e na ponte MQTT.</td>
+        </tr>
+        <tr>
+          <td><b>Perfil funcional não preenchido</b></td>
+          <td>aluno</td>
+          <td>Interface carrega nos padrões conservadores: estímulo médio, movimento reduzido, som nenhum, alvos grandes.</td>
+          <td>Na dúvida, menos estímulo e mais suporte. Nunca cair no padrão mais agressivo.</td>
+        </tr>
+        <tr>
+          <td><b>Kit de apoio vazio</b></td>
+          <td>aluno</td>
+          <td>Tela de pausa mostra só “Só quero avisar”, sem lista de estratégias.</td>
+          <td>Sugerir estratégia genérica seria pior que não sugerir — a personalização é o valor.</td>
+        </tr>
+        <tr>
+          <td><b>Nenhum alerta hoje</b></td>
+          <td>professor</td>
+          <td>“Nenhum aluno precisando de apoio agora” — afirmação positiva, não área vazia.</td>
+          <td>Vazio é a situação desejável; a tela deve comunicar isso, não parecer quebrada.</td>
+        </tr>
+        <tr>
+          <td><b>Sem filhos vinculados</b></td>
+          <td>responsável</td>
+          <td>Tela única com o passo de vincular, sem menu nem abas.</td>
+          <td>Antes do vínculo nenhuma outra tela tem conteúdo. Mostrar navegação vazia confunde.</td>
+        </tr>
+        <tr>
+          <td><b>Sessão expirando</b></td>
+          <td>todos</td>
+          <td>Aviso antes de expirar, com o formulário preservado e retomada de onde parou.</td>
+          <td>Perda de dados por timeout viola diretriz explícita de acessibilidade cognitiva.</td>
+        </tr>
+        <tr>
+          <td><b>Offline</b></td>
+          <td>aluno</td>
+          <td>Pedido de pausa e registro de sentimento ficam na fila e sincronizam depois; a tela diz que foi guardado.</td>
+          <td>Wi-Fi de escola é instável. O pedido de pausa não pode depender de rede no pior momento.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note crit">
+    <span class="tag">Requisito derivado</span>
+    <p>O último item — <b>pausa offline</b> — não está implementado. Exige fila local no PWA e um endpoint que aceite pedido com timestamp retroativo. É a lacuna técnica mais relevante que este documento revela.</p>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<section class="journey" id="corrente">
+  <h2>A corrente completa</h2>
+  <div class="col">
+    <p>As três jornadas não são paralelas: formam um ciclo. Este é o argumento central do artigo — “suporte colaborativo família-escola” — materializado em interface.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 880 320" role="img" aria-label="Ciclo entre responsável, aluno e professor">
+      <rect x="0" y="0" width="880" height="320" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="880" height="320" rx="10" class="s-line"/>
+
+      <!-- responsavel -->
+      <rect x="40" y="60" width="220" height="96" rx="12" style="fill:var(--resp-soft)"/>
+      <text x="62" y="90" class="t-lg">Responsável</text>
+      <text x="62" y="112" class="t-sm">Consente, informa necessidades</text>
+      <text x="62" y="128" class="t-sm">e cadastra o que acalma o filho.</text>
+      <text x="62" y="147" class="t-mono">kit de apoio · perfil funcional</text>
+
+      <!-- aluno -->
+      <rect x="330" y="60" width="220" height="96" rx="12" style="fill:var(--aluno-soft)"/>
+      <text x="352" y="90" class="t-lg">Aluno</text>
+      <text x="352" y="112" class="t-sm">Recebe a tela adaptada, registra</text>
+      <text x="352" y="128" class="t-sm">como está e pede pausa.</text>
+      <text x="352" y="147" class="t-mono">escolhe a estratégia do kit</text>
+
+      <!-- professor -->
+      <rect x="620" y="60" width="220" height="96" rx="12" style="fill:var(--prof-soft)"/>
+      <text x="642" y="90" class="t-lg">Professor</text>
+      <text x="642" y="112" class="t-sm">Recebe o pedido com a estratégia</text>
+      <text x="642" y="128" class="t-sm">junto e registra se ajudou.</text>
+      <text x="642" y="147" class="t-mono">resultado volta ao ciclo</text>
+
+      <!-- setas -->
+      <path d="M264 108 L326 108" class="s-line" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M554 108 L616 108" class="s-line" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M730 160 L730 210 L440 210 L440 240" class="s-line" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+      <path d="M440 240 L150 240 L150 162" class="s-line" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+
+      <defs>
+        <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,1 L6,4 L0,7" fill="none" stroke="var(--line-strong)" stroke-width="1.6"/>
+        </marker>
+      </defs>
+
+      <text x="452" y="272" class="t">O resultado registrado reordena as opções da criança</text>
+      <text x="452" y="290" class="t-sm">e informa a família sobre o que está funcionando na escola.</text>
+      <text x="452" y="306" class="t-sm" style="fill:var(--ink-mute)">É esse retorno que transforma dado em apoio.</text>
+    </svg>
+    <p class="wf-cap"><b>O ciclo.</b> Sem o retorno (linha tracejada), o sistema volta a ser unidirecional — a criança medida, os adultos informados. Com ele, cada pausa melhora a próxima.</p>
+  </div>
+
+  <h3>O que falta para codificar</h3>
+  <div class="grid g2">
+    <div class="card">
+      <span class="k">Bloqueia a jornada 2</span>
+      <h4>Login acessível do aluno</h4>
+      <p>E-mail e senha exclui criança em alfabetização. Opções: QR gerado pelo professor, PIN por sequência de imagens, ou dispositivo confiável. Precisa de rota nova.</p>
+    </div>
+    <div class="card">
+      <span class="k">Revelado por este documento</span>
+      <h4>Pausa offline</h4>
+      <p>Fila local no PWA e endpoint que aceite timestamp retroativo. Wi-Fi de escola cai justamente quando a criança mais precisa.</p>
+    </div>
+    <div class="card">
+      <span class="k">Reforça o artigo</span>
+      <h4>Assentimento da criança</h4>
+      <p>Além do consentimento do responsável, uma tela em linguagem simples onde a própria criança concorda. Padrão CEP/CONEP.</p>
+    </div>
+    <div class="card">
+      <span class="k">Decisão sua</span>
+      <h4>Notificação ao responsável</h4>
+      <p>Tempo real pode virar vigilância e gerar consequência em casa. Sugiro resumo diário por padrão.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Base técnica.</b> Todas as telas exceto o login do aluno e a pausa offline têm endpoint implementado e testado — 125 rotas, 182 testes verdes em MongoDB real e mongomock. Endpoints marcados como novos foram criados nesta fase.</p>
+  <p>Documento irmão: <a href="https://claude.ai/code/artifact/47dda50b-3381-4c90-93c1-a8dbb0a7bfa4">Fundação do front-end</a> — stack, design system, princípios DAD e evidência de acessibilidade cognitiva.</p>
+</footer>
+
+</div>

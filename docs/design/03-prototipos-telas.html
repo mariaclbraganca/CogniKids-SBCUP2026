@@ -1,0 +1,706 @@
+<title>CogniKids — Protótipos de alta fidelidade</title>
+
+<style>
+  :root {
+    --ground:#FBFAF8; --surface:#FFFFFF; --sunken:#F3F1ED;
+    --ink:#1C1B1F; --ink-soft:#4A4750; --ink-mute:#655F73;
+    --line:#E4E0DA; --line-strong:#CFCAC2;
+
+    --marca:#5B4B9E;   --marca-soft:#EFECFA;  --marca-line:#C6BDEC;
+    --ciano:#1D6E77;   --ciano-soft:#E4F1F2;
+    --ambar:#9A5B12;   --ambar-soft:#FBF1E2;
+    --magenta:#9B3268; --magenta-soft:#FAEBF2;
+
+    --display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --body:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --pad:clamp(1.25rem,4vw,3rem);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#16141F; --surface:#1E1C29; --sunken:#262336;
+    --ink:#F0EDF7; --ink-soft:#C9C4D6; --ink-mute:#9A93AD;
+    --line:#322E42; --line-strong:#453F58;
+    --marca:#B3A6F2; --marca-soft:#272042; --marca-line:#453B7A;
+    --ciano:#6FC5CE; --ciano-soft:#10292D;
+    --ambar:#E0A863; --ambar-soft:#322512;
+    --magenta:#EE93BC; --magenta-soft:#351C29;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#16141F; --surface:#1E1C29; --sunken:#262336;
+    --ink:#F0EDF7; --ink-soft:#C9C4D6; --ink-mute:#9A93AD;
+    --line:#322E42; --line-strong:#453F58;
+    --marca:#B3A6F2; --marca-soft:#272042; --marca-line:#453B7A;
+    --ciano:#6FC5CE; --ciano-soft:#10292D;
+    --ambar:#E0A863; --ambar-soft:#322512;
+    --magenta:#EE93BC; --magenta-soft:#351C29;
+  }
+  :root[data-theme="light"]{
+    --ground:#FBFAF8; --surface:#FFFFFF; --sunken:#F3F1ED;
+    --ink:#1C1B1F; --ink-soft:#4A4750; --ink-mute:#655F73;
+    --line:#E4E0DA; --line-strong:#CFCAC2;
+    --marca:#5B4B9E; --marca-soft:#EFECFA; --marca-line:#C6BDEC;
+    --ciano:#1D6E77; --ciano-soft:#E4F1F2;
+    --ambar:#9A5B12; --ambar-soft:#FBF1E2;
+    --magenta:#9B3268; --magenta-soft:#FAEBF2;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--body);
+       font-size:17px;line-height:1.65;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 var(--pad) 6rem}
+
+  h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.15}
+  h1{font-size:clamp(2.2rem,5.4vw,3.5rem);letter-spacing:-.02em;margin:0 0 1rem}
+  h2{font-size:clamp(1.55rem,3vw,2.05rem);letter-spacing:-.015em;margin:0 0 .4rem}
+  h3{font-size:1.18rem;margin:2rem 0 .5rem}
+  p{margin:0 0 1rem}
+  a{color:var(--marca)}
+  .col{max-width:68ch}
+  .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+           color:var(--ink-mute);margin:0 0 .7rem}
+  .lede{font-size:1.12rem;color:var(--ink-soft)}
+
+  header.mast{border-bottom:1px solid var(--line);padding:clamp(2.4rem,6vw,4.4rem) 0 2.2rem;margin-bottom:2.4rem}
+  .mast-logo{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
+  .meta{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;font-size:.82rem;color:var(--ink-mute);
+        margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--line)}
+  .meta b{color:var(--ink-soft);font-weight:600}
+
+  section{padding:2.8rem 0 .5rem;border-top:1px solid var(--line);margin-top:2.2rem}
+  section:first-of-type{border-top:0;margin-top:0}
+  .sec-n{font-family:var(--mono);font-size:.76rem;color:var(--marca);display:block;margin-bottom:.45rem}
+
+  /* ---------- moldura de dispositivo ---------- */
+  .screens{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1.6rem 0}
+  .device{flex:0 0 auto}
+  .phone{
+    width:300px;background:var(--surface);border:1px solid var(--line-strong);
+    border-radius:26px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .phone-in{background:var(--ground);border-radius:16px;overflow:hidden;
+            min-height:560px;display:flex;flex-direction:column}
+  .desktop{width:100%;max-width:900px;background:var(--surface);border:1px solid var(--line-strong);
+           border-radius:12px;overflow:hidden}
+  .cap{font-size:.79rem;color:var(--ink-mute);margin:.6rem .15rem 0;max-width:300px}
+  .cap b{color:var(--ink-soft)}
+  .cap-wide{max-width:900px}
+
+  /* ---------- UI do app ---------- */
+  .bar{display:flex;align-items:center;justify-content:space-between;
+       padding:.85rem 1rem;border-bottom:1px solid var(--line);background:var(--surface)}
+  .bar-t{font-weight:600;font-size:.95rem}
+  .body{padding:1.1rem 1rem;flex:1;display:flex;flex-direction:column;gap:.85rem}
+  .body.calm{gap:1.1rem}
+
+  .greet{font-size:1.5rem;font-weight:700;margin:0}
+  .sub{font-size:.82rem;color:var(--ink-mute);margin:.15rem 0 0}
+
+  .act{
+    display:flex;align-items:center;gap:.9rem;width:100%;
+    min-height:88px;padding:1rem;border-radius:14px;border:0;
+    font-family:inherit;font-size:1.02rem;font-weight:600;text-align:left;
+    cursor:pointer;background:var(--marca);color:#fff;
+  }
+  .act.ghost{background:var(--surface);color:var(--ink);border:2px solid var(--line-strong)}
+  .act .ico{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+            font-size:22px;background:rgba(255,255,255,.22);flex:0 0 auto}
+  .act.ghost .ico{background:var(--marca-soft)}
+  .act .txt{display:flex;flex-direction:column;gap:.12rem}
+  .act .txt small{font-weight:400;font-size:.78rem;opacity:.88}
+
+  .band{display:flex;align-items:center;gap:.7rem;padding:.8rem .9rem;
+        border-radius:11px;background:var(--ciano-soft);font-size:.84rem}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--ciano);flex:0 0 auto}
+  .band .txt{flex:1;line-height:1.35}
+  .band small{display:block;color:var(--ink-mute);font-size:.76rem}
+  .mini-btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+            border-radius:7px;padding:.32rem .6rem;font-size:.74rem;font-family:inherit;cursor:pointer}
+
+  .nav{display:flex;border-top:1px solid var(--line);background:var(--surface)}
+  .nav a{flex:1;text-align:center;padding:.6rem .2rem .7rem;text-decoration:none;
+         color:var(--ink-mute);font-size:.68rem;display:flex;flex-direction:column;gap:.2rem;align-items:center}
+  .nav a.on{color:var(--marca);font-weight:600}
+  .nav .ni{font-size:19px;line-height:1}
+
+  /* grade de sentimentos */
+  .feel{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  .feel button{
+    min-height:92px;border-radius:13px;border:2px solid var(--line-strong);
+    background:var(--surface);font-family:inherit;font-size:.86rem;color:var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;cursor:pointer;
+  }
+  .feel button .e{font-size:27px;line-height:1}
+  .feel button.sel{border-color:var(--marca);background:var(--marca-soft);border-width:3px}
+
+  /* opcoes de pausa */
+  .opt{display:flex;align-items:center;gap:.8rem;width:100%;min-height:72px;
+       padding:.85rem;border-radius:12px;border:2px solid var(--line-strong);
+       background:var(--surface);font-family:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+  .opt .e{font-size:22px;flex:0 0 auto}
+  .opt .t{font-size:.94rem;font-weight:600}
+  .opt small{display:block;font-weight:400;font-size:.76rem;color:var(--ciano);margin-top:.1rem}
+  .opt small.n{color:var(--ink-mute)}
+  .escape{background:var(--marca-soft);color:var(--marca);border:0;border-radius:12px;
+          padding:.85rem;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;width:100%}
+
+  /* confirmacao */
+  .done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+        text-align:center;gap:.6rem;padding:1.5rem}
+  .done .halo{width:96px;height:96px;border-radius:50%;background:var(--ciano-soft);
+              display:grid;place-items:center;font-size:42px;margin-bottom:.4rem}
+  .done h4{font-family:var(--display);font-size:1.45rem;margin:0}
+  .done p{font-size:.9rem;color:var(--ink-soft);margin:0}
+
+  /* segmentos do painel de conforto */
+  .fieldl{font-size:.82rem;font-weight:600;margin:0 0 .35rem}
+  .seg{display:flex;gap:.3rem;background:var(--sunken);padding:.28rem;border-radius:10px}
+  .seg button{flex:1;border:0;background:transparent;font-family:inherit;font-size:.8rem;
+              padding:.55rem .3rem;border-radius:7px;color:var(--ink-mute);cursor:pointer}
+  .seg button.on{background:var(--marca);color:#fff;font-weight:600}
+
+  /* consentimento */
+  .cons{display:flex;gap:.8rem;padding:.9rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .cbx{width:24px;height:24px;border-radius:6px;background:var(--ambar);flex:0 0 auto;
+       display:grid;place-items:center;color:#fff;font-size:14px;font-weight:700}
+  .cbx.off{background:var(--surface);border:2px solid var(--line-strong)}
+  .cons .t{font-size:.9rem;font-weight:600;margin:0 0 .18rem}
+  .cons p{font-size:.79rem;color:var(--ink-mute);margin:0;line-height:1.45}
+  .cons .req{color:var(--ambar);font-weight:600}
+
+  /* alertas do professor */
+  .alert{display:flex;gap:.9rem;padding:1rem 1.1rem;border-radius:11px;align-items:flex-start}
+  .alert .stripe{width:5px;border-radius:3px;align-self:stretch;flex:0 0 auto}
+  .alert.pause{background:var(--ciano-soft)} .alert.pause .stripe{background:var(--ciano)}
+  .alert.ml{background:var(--magenta-soft)} .alert.ml .stripe{background:var(--magenta)}
+  .alert h4{font-size:1rem;margin:0 0 .2rem;font-family:var(--body);font-weight:700}
+  .alert p{font-size:.85rem;margin:0 0 .15rem}
+  .alert .hint{font-size:.79rem;color:var(--ink-mute)}
+  .alert .acts{display:flex;gap:.5rem;margin-left:auto;flex-shrink:0;align-self:center}
+  .btn{border:0;border-radius:8px;padding:.5rem .85rem;font-family:inherit;font-size:.82rem;
+       font-weight:600;cursor:pointer;white-space:nowrap}
+  .btn.ciano{background:var(--ciano);color:#fff}
+  .btn.mag{background:var(--magenta);color:#fff}
+  .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);font-weight:400}
+
+  .roster{display:flex;flex-direction:column}
+  .row{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.1rem;border-bottom:1px solid var(--line);font-size:.88rem}
+  .row:last-child{border-bottom:0}
+  .row.hi{background:var(--sunken)}
+  .row .nm{font-weight:600}
+  .row small{display:block;color:var(--ink-mute);font-size:.78rem;font-weight:400}
+  .row .when{margin-left:auto;font-size:.78rem;color:var(--ink-mute);text-align:right}
+  .pip{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+
+  /* semana em faixas */
+  .week{display:flex;gap:.35rem}
+  .week div{flex:1;text-align:center}
+  .week .b{height:34px;border-radius:5px;margin-bottom:.25rem}
+  .week span{font-size:.68rem;color:var(--ink-mute)}
+
+  .note{border-left:3px solid var(--marca-line);background:var(--marca-soft);
+        padding:1rem 1.2rem;margin:1.3rem 0;border-radius:0 6px 6px 0}
+  .note .tag{display:block;font-size:.71rem;font-weight:700;letter-spacing:.1em;
+             text-transform:uppercase;margin-bottom:.4rem;color:var(--ink-soft)}
+  .note p:last-child{margin-bottom:0}
+
+  code{font-family:var(--mono);font-size:.85em;background:var(--sunken);
+       padding:.1em .35em;border-radius:4px;border:1px solid var(--line)}
+  .api{display:inline-block;font-family:var(--mono);font-size:.74rem;background:var(--sunken);
+       border:1px solid var(--line);padding:.16em .48em;border-radius:4px;color:var(--ink-soft);margin:0 .28rem .28rem 0}
+
+  .scroll{overflow-x:auto;margin:1.3rem 0;border:1px solid var(--line);border-radius:8px}
+  table{border-collapse:collapse;width:100%;font-size:.87rem;min-width:540px}
+  th,td{text-align:left;padding:.62rem .8rem;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--sunken);font-size:.73rem;letter-spacing:.06em;text-transform:uppercase;
+     color:var(--ink-soft);font-weight:700}
+  tbody tr:last-child td{border-bottom:0}
+
+  footer{border-top:1px solid var(--line);margin-top:3.4rem;padding-top:1.7rem;
+         color:var(--ink-mute);font-size:.85rem}
+  :focus-visible{outline:2px solid var(--marca);outline-offset:2px;border-radius:3px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="mast-logo">
+    <svg width="180" height="90" viewBox="0 0 300 150" role="img" aria-label="CogniKids">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--ciano)"/>
+          <stop offset="55%" stop-color="var(--marca)"/>
+          <stop offset="100%" stop-color="var(--ambar)"/>
+        </linearGradient>
+      </defs>
+      <path d="M92 64 C 68 42, 34 46, 30 70 C 26 94, 56 106, 78 90 C 100 74, 122 50, 150 48"
+            fill="none" stroke="url(#lg)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M150 48 C 178 46, 208 58, 216 78 C 224 98, 202 110, 182 98 C 162 86, 122 62, 92 64"
+            fill="none" stroke="url(#lg)" stroke-width="9" stroke-linecap="round"/>
+      <g transform="translate(150,24) scale(0.84)">
+        <path d="M40 6 L47 -18 L54 8 Z" fill="var(--marca)"/>
+        <path d="M16 34 C 16 16, 30 4, 46 6 C 62 8, 72 20, 72 34 C 72 42, 68 48, 66 54
+                 C 64 60, 66 66, 62 72 C 58 78, 50 76, 46 70 C 40 62, 34 60, 26 54
+                 C 19 49, 16 42, 16 34 Z" fill="var(--marca)"/>
+        <path d="M20 20 C 24 8, 38 2, 50 6 C 40 6, 26 12, 20 20 Z" fill="var(--magenta)"/>
+        <path d="M14 30 C 6 26, 2 34, 8 40 C 10 34, 12 32, 14 30 Z" fill="var(--magenta)"/>
+        <circle cx="54" cy="32" r="3.6" fill="var(--surface)"/>
+        <path d="M66 56 C 70 58, 72 62, 69 65" stroke="var(--surface)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </g>
+      <text x="150" y="140" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif"
+            font-size="28" font-weight="600" fill="var(--ink)">CogniKids</text>
+    </svg>
+  </div>
+
+  <p class="eyebrow">Protótipos de alta fidelidade · Fase 2</p>
+  <h1>As telas como serão, na paleta que a criança consegue usar</h1>
+  <p class="lede col">Unicórnio e infinito preservados, redesenhados nas matizes do logo original — dessaturadas até passarem em WCAG AA. Cada tela abaixo é HTML e CSS reais, não maquete: os tokens viram variáveis do design system.</p>
+
+  <div class="meta">
+    <span><b>Paleta</b> derivada do logo · AA verificado</span>
+    <span><b>Telas</b> 11 protótipos · 3 perfis</span>
+    <span><b>Tema</b> claro e escuro</span>
+    <span><b>Base</b> 125 rotas · 182 testes</span>
+  </div>
+</header>
+
+<!-- =============================== -->
+<section>
+  <span class="sec-n">01</span>
+  <h2>A marca, recolorida</h2>
+  <div class="col">
+    <p>O unicórnio e o infinito permanecem — são o que identifica o CogniKids. O que mudou foi a <b>intensidade</b>: as mesmas matizes do logo original (ciano, magenta-violeta, âmbar), agora em versões que passam em contraste e não disparam sobrecarga sensorial.</p>
+    <p>O gradiente do infinito percorre exatamente as três cores funcionais do sistema — ciano do professor, violeta do aluno, âmbar do responsável. A marca conta a estrutura do produto.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:24%">Elemento</th><th style="width:24%">Logo original</th><th style="width:24%">App (claro)</th><th style="width:28%">Papel no sistema</th></tr></thead>
+      <tbody>
+        <tr><td>Laço esquerdo</td><td>ciano neon</td><td><code>#1D6E77</code></td><td>Professor · estado estável</td></tr>
+        <tr><td>Centro / unicórnio</td><td>magenta-violeta</td><td><code>#5B4B9E</code></td><td>Aluno · marca principal</td></tr>
+        <tr><td>Laço direito</td><td>amarelo neon</td><td><code>#9A5B12</code></td><td>Responsável · atenção</td></tr>
+        <tr><td>Crina</td><td>magenta</td><td><code>#9B3268</code></td><td>Prioritário · alerta de crise</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">Sobre o unicórnio e a faixa etária</span>
+    <p>Mantido conforme sua decisão. A silhueta foi simplificada — sem brilho, sem contorno duplo, traço geométrico — o que reduz a leitura infantilizada sem perder a identidade. Para o aluno mais velho, a app bar usa <b>só o infinito</b>; o unicórnio aparece no login e no material institucional.</p>
+  </div>
+</section>
+
+<!-- =============================== -->
+<section>
+  <span class="sec-n">02</span>
+  <h2>Aluno</h2>
+  <p class="col lede">Cinco telas. Alvos de 88 px, navegação rasa, nenhuma informação biométrica.</p>
+
+  <div class="screens">
+    <!-- login -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="body calm" style="justify-content:center;align-items:center;text-align:center;gap:1.4rem">
+          <svg width="150" height="76" viewBox="0 0 300 150" aria-label="CogniKids">
+            <defs><linearGradient id="l2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--ciano)"/><stop offset="55%" stop-color="var(--marca)"/><stop offset="100%" stop-color="var(--ambar)"/>
+            </linearGradient></defs>
+            <path d="M92 64 C 68 42, 34 46, 30 70 C 26 94, 56 106, 78 90 C 100 74, 122 50, 150 48" fill="none" stroke="url(#l2)" stroke-width="9" stroke-linecap="round"/>
+            <path d="M150 48 C 178 46, 208 58, 216 78 C 224 98, 202 110, 182 98 C 162 86, 122 62, 92 64" fill="none" stroke="url(#l2)" stroke-width="9" stroke-linecap="round"/>
+            <g transform="translate(150,24) scale(0.84)">
+              <path d="M40 6 L47 -18 L54 8 Z" fill="var(--marca)"/>
+              <path d="M16 34 C 16 16, 30 4, 46 6 C 62 8, 72 20, 72 34 C 72 42, 68 48, 66 54 C 64 60, 66 66, 62 72 C 58 78, 50 76, 46 70 C 40 62, 34 60, 26 54 C 19 49, 16 42, 16 34 Z" fill="var(--marca)"/>
+              <path d="M20 20 C 24 8, 38 2, 50 6 C 40 6, 26 12, 20 20 Z" fill="var(--magenta)"/>
+              <circle cx="54" cy="32" r="3.6" fill="var(--surface)"/>
+            </g>
+            <text x="150" y="140" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="27" font-weight="600" fill="var(--ink)">CogniKids</text>
+          </svg>
+          <p style="font-size:1.05rem;margin:0">Toque na sua figura para entrar</p>
+          <div class="feel" style="width:100%">
+            <button><span class="e">🦊</span>Raposa</button>
+            <button class="sel"><span class="e">🐢</span>Tartaruga</button>
+            <button><span class="e">🦋</span>Borboleta</button>
+            <button><span class="e">🐙</span>Polvo</button>
+          </div>
+          <p class="sub" style="margin:0">Escolha as 3 figuras na ordem que a professora mostrou.</p>
+        </div>
+      </div></div>
+      <p class="cap"><b>Entrar sem escrever.</b> Proposta de login por sequência de figuras — não depende de leitura nem de memória de senha. <span class="api">rota a criar</span></p>
+    </div>
+
+    <!-- meu dia -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar">
+          <svg width="34" height="17" viewBox="0 0 240 120" aria-label="CogniKids">
+            <defs><linearGradient id="l3" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--ciano)"/><stop offset="55%" stop-color="var(--marca)"/><stop offset="100%" stop-color="var(--ambar)"/>
+            </linearGradient></defs>
+            <path d="M92 64 C 68 42, 34 46, 30 70 C 26 94, 56 106, 78 90 C 100 74, 122 50, 150 48" fill="none" stroke="url(#l3)" stroke-width="13" stroke-linecap="round"/>
+            <path d="M150 48 C 178 46, 208 58, 216 78 C 224 98, 202 110, 182 98 C 162 86, 122 62, 92 64" fill="none" stroke="url(#l3)" stroke-width="13" stroke-linecap="round"/>
+          </svg>
+          <span class="bar-t">Meu dia</span>
+          <span style="width:34px"></span>
+        </div>
+        <div class="body calm">
+          <div>
+            <p class="greet">Oi, Ana</p>
+            <p class="sub">Terça, 26 de julho</p>
+          </div>
+          <button class="act">
+            <span class="ico">🙂</span>
+            <span class="txt">Como estou<small>Marcar como me sinto agora</small></span>
+          </button>
+          <button class="act ghost">
+            <span class="ico">🌿</span>
+            <span class="txt">Preciso de pausa<small>Avisar que quero um tempo</small></span>
+          </button>
+          <div class="band">
+            <span class="dot"></span>
+            <span class="txt">Pulseira ligada<small>Mede batimento · Prof. Carla vê</small></span>
+            <button class="mini-btn">Desligar</button>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#" class="on"><span class="ni">🏠</span>Início</a>
+          <a href="#"><span class="ni">⭐</span>Minhas</a>
+          <a href="#"><span class="ni">📅</span>Agenda</a>
+          <a href="#"><span class="ni">⚙️</span>Ajustes</a>
+        </nav>
+      </div></div>
+      <p class="cap"><b>Meu dia.</b> Duas ações e o status da pulseira como informação de primeira classe — com quem vê nomeado e o desligar ao alcance. <span class="api">GET /accessibility/me</span></p>
+    </div>
+
+    <!-- sentimento -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar">
+          <span style="font-size:.85rem;color:var(--ink-mute)">← Voltar</span>
+          <span class="bar-t">Como estou</span>
+          <span style="width:48px"></span>
+        </div>
+        <div class="body">
+          <p style="font-size:1.22rem;font-weight:700;margin:.2rem 0 .3rem">Como você está?</p>
+          <div class="feel">
+            <button><span class="e">😀</span>Bem</button>
+            <button><span class="e">😐</span>Mais ou menos</button>
+            <button><span class="e">😟</span>Preocupado</button>
+            <button class="sel"><span class="e">😣</span>Difícil</button>
+            <button><span class="e">😴</span>Cansado</button>
+            <button><span class="e">🤐</span>Não quero dizer</button>
+          </div>
+        </div>
+      </div></div>
+      <p class="cap"><b>Como estou.</b> Sem escala numérica, sem carinha verde/vermelha, sem pontuação. “Não quero dizer” é resposta legítima. <span class="api">POST /students/feelings</span></p>
+    </div>
+
+    <!-- pausa -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar">
+          <span style="font-size:.85rem;color:var(--ink-mute)">← Voltar</span>
+          <span class="bar-t">Pausa</span>
+          <span style="width:48px"></span>
+        </div>
+        <div class="body">
+          <div>
+            <p style="font-size:1.22rem;font-weight:700;margin:.2rem 0 .2rem">Pedir uma pausa</p>
+            <p class="sub">A Prof. Carla vai saber. Você não precisa explicar.</p>
+          </div>
+          <button class="opt">
+            <span class="e">🎧</span>
+            <span><span class="t">Fone abafador</span><small>funcionou nas últimas 3 vezes</small></span>
+          </button>
+          <button class="opt">
+            <span class="e">🚪</span>
+            <span><span class="t">Sala de calma</span><small class="n">sair da sala um pouco</small></span>
+          </button>
+          <button class="opt">
+            <span class="e">💧</span>
+            <span><span class="t">Beber água</span><small class="n">uma volta rápida</small></span>
+          </button>
+          <button class="escape">Só quero avisar →</button>
+        </div>
+      </div></div>
+      <p class="cap"><b>Preciso de pausa.</b> Estratégias do kit da família, ordenadas por eficácia real. Avisar sem escolher é sempre possível. <span class="api">GET /breaks/options</span></p>
+    </div>
+
+    <!-- confirmacao -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar"><span style="width:48px"></span><span class="bar-t">Pausa</span><span style="width:48px"></span></div>
+        <div class="done">
+          <span class="halo">🌿</span>
+          <h4>Pronto, avisamos.</h4>
+          <p>Você pode ficar tranquilo.<br>A Prof. Carla já sabe que você precisa de um tempo.</p>
+          <button class="act ghost" style="margin-top:1rem;min-height:56px;justify-content:center">
+            <span class="txt" style="text-align:center">Voltar ao início</span>
+          </button>
+        </div>
+      </div></div>
+      <p class="cap"><b>Confirmação.</b> Não pede nada de volta — nem avaliação, nem explicação. O trabalho da criança terminou. <span class="api">POST /breaks</span></p>
+    </div>
+
+    <!-- conforto -->
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar">
+          <span style="font-size:.85rem;color:var(--ink-mute)">← Voltar</span>
+          <span class="bar-t">Ajustes</span>
+          <span style="width:48px"></span>
+        </div>
+        <div class="body">
+          <div>
+            <p style="font-size:1.15rem;font-weight:700;margin:.2rem 0 .2rem">Como você prefere ver o app?</p>
+            <p class="sub">Pode mudar quando quiser. Ninguém é avisado.</p>
+          </div>
+          <div>
+            <p class="fieldl">Cores e movimento</p>
+            <div class="seg"><button class="on">Calmo</button><button>Médio</button><button>Vivo</button></div>
+          </div>
+          <div>
+            <p class="fieldl">Quanta coisa na tela</p>
+            <div class="seg"><button>Pouca</button><button class="on">Média</button><button>Tudo</button></div>
+          </div>
+          <div>
+            <p class="fieldl">Texto</p>
+            <div class="seg"><button class="on">Só figura</button><button>Figura + letra</button></div>
+          </div>
+          <p class="sub" style="margin-top:.4rem">Tamanho dos botões e confirmações continuam como sua família configurou.</p>
+        </div>
+      </div></div>
+      <p class="cap"><b>Painel de conforto.</b> Três eixos ajustáveis. A última linha diz à criança o que ela <i>não</i> controla e por quê. <span class="api">PUT /accessibility/me/comfort</span></p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="tag">O que muda entre perfis funcionais</span>
+    <p>Nenhuma dessas telas é duplicada em código. Uma criança com <code>estimulo: vivo</code> e <code>densidade: completa</code> vê a mesma estrutura com quatro ações em grade, cores por categoria e mais informação simultânea. O que muda são os tokens no <code>&lt;html&gt;</code> — o componente é o mesmo.</p>
+  </div>
+</section>
+
+<!-- =============================== -->
+<section>
+  <span class="sec-n">03</span>
+  <h2>Responsável</h2>
+  <p class="col lede">A porta de entrada legal do sistema. Consentimento, perfil funcional e kit de apoio.</p>
+
+  <div class="screens">
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar"><span class="bar-t">Autorizações</span><span style="font-size:.78rem;color:var(--ink-mute)">1 de 2</span></div>
+        <div class="body" style="gap:.65rem">
+          <div>
+            <p style="font-size:1.15rem;font-weight:700;margin:.1rem 0 .2rem">O que você autoriza?</p>
+            <p class="sub">Pode mudar ou cancelar qualquer item depois.</p>
+          </div>
+          <div class="cons">
+            <span class="cbx">✓</span>
+            <div><p class="t">Usar o aplicativo</p>
+              <p>Ana entra, registra como se sente e pede pausa.<br><span class="req">necessário para os demais</span></p></div>
+          </div>
+          <div class="cons">
+            <span class="cbx">✓</span>
+            <div><p class="t">Coletar dados da pulseira</p>
+              <p>Batimentos e movimento. Sem isso o app funciona, mas não detecta desregulação.</p></div>
+          </div>
+          <div class="cons">
+            <span class="cbx">✓</span>
+            <div><p class="t">Compartilhar com a escola</p>
+              <p>A Prof. Carla vê registros e alertas para apoiar a Ana na aula.</p></div>
+          </div>
+          <div class="cons">
+            <span class="cbx off"></span>
+            <div><p class="t">Usar os dados em pesquisa</p>
+              <p>Sem identificação. Recusar não muda nada no uso do app.</p></div>
+          </div>
+          <p class="sub" style="margin-top:.2rem">Versão 1.0.0 · registrada com data e hora</p>
+        </div>
+      </div></div>
+      <p class="cap"><b>Consentimento granular.</b> Nada vem pré-marcado: o backend nega tudo até haver decisão explícita. <span class="api">PUT /consent/{id}</span></p>
+    </div>
+
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar"><span class="bar-t">Sobre a Ana</span><span style="font-size:.78rem;color:var(--ink-mute)">3 de 12</span></div>
+        <div class="body">
+          <div style="height:6px;background:var(--sunken);border-radius:3px;overflow:hidden">
+            <div style="width:25%;height:100%;background:var(--ambar)"></div>
+          </div>
+          <div>
+            <p style="font-size:1.05rem;font-weight:700;margin:.3rem 0 .25rem;line-height:1.35">
+              Ela se incomoda com sons altos ou luzes fortes?</p>
+            <p class="sub">Por exemplo: tapa os ouvidos, evita lugares barulhentos.</p>
+          </div>
+          <div class="seg" style="flex-direction:column;gap:.4rem;background:transparent;padding:0">
+            <button class="opt" style="min-height:52px"><span><span class="t">Não</span></span></button>
+            <button class="opt" style="min-height:52px"><span><span class="t">Às vezes</span></span></button>
+            <button class="opt" style="min-height:52px;border-color:var(--ambar);background:var(--ambar-soft)">
+              <span><span class="t">Sim</span></span></button>
+          </div>
+          <p class="sub">Não precisa de laudo. Responda o que você observa.</p>
+        </div>
+      </div></div>
+      <p class="cap"><b>Perfil funcional.</b> Comportamento observável, nunca diagnóstico — há teste que falha se alguma pergunta citar um. <span class="api">PUT /accessibility/{id}</span></p>
+    </div>
+
+    <div class="device">
+      <div class="phone"><div class="phone-in">
+        <div class="bar"><span class="bar-t">Ana Sofia</span><span style="font-size:.78rem;color:var(--ink-mute)">3º B</span></div>
+        <div class="body">
+          <div style="background:var(--ciano-soft);border-radius:12px;padding:.95rem">
+            <p style="font-size:1.05rem;font-weight:700;margin:0 0 .3rem">Dia tranquilo até agora</p>
+            <p style="font-size:.84rem;color:var(--ink-soft);margin:0;line-height:1.45">
+              Marcou “bem” de manhã e pediu uma pausa às 10:14.</p>
+          </div>
+          <div>
+            <p class="fieldl">Últimos 7 dias</p>
+            <div class="week">
+              <div><div class="b" style="background:var(--ciano-soft)"></div><span>seg</span></div>
+              <div><div class="b" style="background:var(--ciano-soft)"></div><span>ter</span></div>
+              <div><div class="b" style="background:var(--ambar-soft)"></div><span>qua</span></div>
+              <div><div class="b" style="background:var(--ciano-soft)"></div><span>qui</span></div>
+              <div><div class="b" style="background:var(--magenta-soft)"></div><span>sex</span></div>
+              <div><div class="b" style="background:var(--sunken)"></div><span>sáb</span></div>
+              <div><div class="b" style="background:var(--ciano-soft)"></div><span>seg</span></div>
+            </div>
+          </div>
+          <div>
+            <p class="fieldl">Kit de apoio</p>
+            <button class="opt" style="min-height:58px">
+              <span class="e">🎧</span>
+              <span><span class="t">Fone abafador</span><small>funcionou 3× esta semana</small></span>
+            </button>
+          </div>
+          <button class="escape">+ Adicionar estratégia que funciona em casa</button>
+        </div>
+      </div></div>
+      <p class="cap"><b>Meu filho.</b> Faixas de cor, não série de BPM — o responsável não é clínico e não deve interpretar biometria. <span class="api">GET /parents/dashboard</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== -->
+<section>
+  <span class="sec-n">04</span>
+  <h2>Professor</h2>
+  <p class="col lede">Ferramenta de trabalho: densa, escaneada em segundos. O alerta leva a uma ação, não a um número.</p>
+
+  <div class="desktop">
+    <div class="bar" style="padding:.9rem 1.1rem">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <svg width="30" height="15" viewBox="0 0 240 120" aria-label="CogniKids">
+          <defs><linearGradient id="l4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--ciano)"/><stop offset="55%" stop-color="var(--marca)"/><stop offset="100%" stop-color="var(--ambar)"/>
+          </linearGradient></defs>
+          <path d="M92 64 C 68 42, 34 46, 30 70 C 26 94, 56 106, 78 90 C 100 74, 122 50, 150 48" fill="none" stroke="url(#l4)" stroke-width="13" stroke-linecap="round"/>
+          <path d="M150 48 C 178 46, 208 58, 216 78 C 224 98, 202 110, 182 98 C 162 86, 122 62, 92 64" fill="none" stroke="url(#l4)" stroke-width="13" stroke-linecap="round"/>
+        </svg>
+        <span class="bar-t">3º Ano B · 24 alunos</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <button class="btn ghost">Mensagens</button>
+        <span style="width:28px;height:28px;border-radius:50%;background:var(--marca-soft);
+                     display:grid;place-items:center;font-size:.72rem;font-weight:700;color:var(--marca)">CS</span>
+      </div>
+    </div>
+
+    <div style="padding:1.1rem;display:flex;flex-direction:column;gap:.8rem">
+      <div class="alert pause">
+        <span class="stripe"></span>
+        <div>
+          <h4>Ana Sofia pediu uma pausa</h4>
+          <p>Escolheu: fone abafador · há 2 minutos</p>
+          <p class="hint">Ela avisou por conta própria. Não precisa explicar nada a você.</p>
+        </div>
+        <div class="acts">
+          <button class="btn ciano">Já vi</button>
+          <button class="btn ghost">Encerrar</button>
+        </div>
+      </div>
+
+      <div class="alert ml">
+        <span class="stripe"></span>
+        <div>
+          <h4>Lucas Silva pode precisar de apoio</h4>
+          <p>Sinais de desregulação há 4 minutos · confiança 91%</p>
+          <p class="hint">No kit dele: sala de calma, beber água. Gatilho conhecido: mudança de rotina.</p>
+        </div>
+        <div class="acts">
+          <button class="btn mag">Ver o que fazer</button>
+          <button class="btn ghost">Já resolvi</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 1.1rem .3rem"><p class="fieldl" style="margin:.4rem 0 .2rem">Turma</p></div>
+    <div class="roster">
+      <div class="row hi">
+        <span class="pip" style="background:var(--ciano)"></span>
+        <span><span class="nm">Ana Sofia</span><small>Marcou “difícil” às 10:12</small></span>
+        <span class="when">pausa pedida<br>10:14</span>
+      </div>
+      <div class="row">
+        <span class="pip" style="background:var(--magenta)"></span>
+        <span><span class="nm">Lucas Silva</span><small>Marcou “preocupado” às 9:40</small></span>
+        <span class="when">alerta ativo<br>10:16</span>
+      </div>
+      <div class="row">
+        <span class="pip" style="background:var(--line-strong)"></span>
+        <span><span class="nm">Beatriz Nunes</span><small>Marcou “bem” às 9:05</small></span>
+        <span class="when">sem pedido</span>
+      </div>
+      <div class="row">
+        <span class="pip" style="background:var(--line-strong)"></span>
+        <span><span class="nm">Diogo Martins</span><small>Sem registro hoje</small></span>
+        <span class="when">pulseira desligada</span>
+      </div>
+    </div>
+  </div>
+  <p class="cap cap-wide"><b>Painel da turma.</b> Pedido de pausa (ciano) acima do alerta de ML (magenta): sinal explícito da criança vale mais que inferência de sensor. “Pulseira desligada” é estado neutro, nunca falha do aluno. <span class="api">GET /breaks/pending</span> <span class="api">GET /teachers/crisis_alerts</span></p>
+
+  <div class="note">
+    <span class="tag">O que o alerta não mostra</span>
+    <p>Nenhum “BPM 155, GSR 4.8”. Número biométrico bruto não informa decisão pedagógica e empurra o professor a uma leitura clínica que ele não tem formação para fazer. O dado continua na tela de detalhe, para auditoria.</p>
+  </div>
+</section>
+
+<!-- =============================== -->
+<section>
+  <span class="sec-n">05</span>
+  <h2>Do protótipo ao código</h2>
+  <div class="col">
+    <p>Estas telas não são maquete: são HTML e CSS reais, escritos com os tokens do design system. A conversão para React é mecânica.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:26%">Protótipo</th><th style="width:30%">Componente React</th><th style="width:44%">Token que o governa</th></tr></thead>
+      <tbody>
+        <tr><td><code>.act</code></td><td><code>&lt;AcaoPrimaria&gt;</code></td><td><code>alvo_toque</code> define min-height (56/88 px)</td></tr>
+        <tr><td><code>.feel button</code></td><td><code>&lt;GradeSentimentos&gt;</code></td><td><code>texto</code> mostra ou oculta o rótulo</td></tr>
+        <tr><td><code>.opt</code></td><td><code>&lt;OpcaoPausa&gt;</code></td><td><code>densidade</code> define quantas aparecem</td></tr>
+        <tr><td><code>.seg</code></td><td><code>&lt;Segmento&gt;</code></td><td>Radix ToggleGroup, foco acessível de fábrica</td></tr>
+        <tr><td><code>.alert</code></td><td><code>&lt;CartaoAlerta&gt;</code></td><td>severidade define faixa e cor semântica</td></tr>
+        <tr><td><code>.band</code></td><td><code>&lt;StatusPulseira&gt;</code></td><td>estado do consentimento biométrico</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>O que ainda falta decidir</h3>
+  <div class="col">
+    <ul>
+      <li><b>Login por figuras</b> — desenhei uma proposta na primeira tela do aluno. Precisa da sua aprovação e de rota nova no backend.</li>
+      <li><b>Pausa offline</b> — fila local no PWA; Wi-Fi de escola cai justamente no pior momento.</li>
+      <li><b>Assentimento da criança</b> — tela em linguagem simples, além do consentimento do responsável.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>Paleta.</b> Derivada das matizes do logo original e verificada em WCAG AA nos dois temas: marca 6,8:1 e 8,4:1 · ciano 5,7:1 e 9,1:1 · âmbar 5,2:1 e 8,6:1 · magenta 6,6:1 e 8,3:1.</p>
+  <p>Documentos irmãos: <a href="https://claude.ai/code/artifact/47dda50b-3381-4c90-93c1-a8dbb0a7bfa4">Fundação do front-end</a> · <a href="https://claude.ai/code/artifact/870b37c5-879d-4ec9-9bf3-73a47c2923e2">Jornadas dos 3 perfis</a></p>
+</footer>
+
+</div>

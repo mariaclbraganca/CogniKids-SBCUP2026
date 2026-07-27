@@ -1,0 +1,1182 @@
+<title>CogniKids — Fundação do Front-end</title>
+
+<style>
+  :root {
+    --ground: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface-sunken: #F3F1ED;
+    --ink: #1C1B1F;
+    --ink-soft: #4A4750;
+    --ink-mute: #6B6673;
+    --line: #E2DFD9;
+    --line-strong: #CFCAC2;
+
+    --accent: #4F46A3;
+    --accent-soft: #EEECF8;
+    --accent-line: #C7C1E8;
+
+    --warn: #B45309;
+    --warn-soft: #FDF3E4;
+    --crit: #A13A2E;
+    --crit-soft: #FBEDEA;
+    --good: #3F6F5B;
+    --good-soft: #E9F2EE;
+
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --measure: 68ch;
+    --pad: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #14131A;
+      --surface: #1C1B23;
+      --surface-sunken: #232230;
+      --ink: #F2F0F5;
+      --ink-soft: #C9C5D2;
+      --ink-mute: #948FA1;
+      --line: #302E3C;
+      --line-strong: #423F52;
+
+      --accent: #A79EF0;
+      --accent-soft: #262340;
+      --accent-line: #423B75;
+
+      --warn: #E0A050;
+      --warn-soft: #33260F;
+      --crit: #E28A7C;
+      --crit-soft: #38201C;
+      --good: #7FBFA3;
+      --good-soft: #14291F;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #14131A;
+    --surface: #1C1B23;
+    --surface-sunken: #232230;
+    --ink: #F2F0F5;
+    --ink-soft: #C9C5D2;
+    --ink-mute: #948FA1;
+    --line: #302E3C;
+    --line-strong: #423F52;
+    --accent: #A79EF0;
+    --accent-soft: #262340;
+    --accent-line: #423B75;
+    --warn: #E0A050;
+    --warn-soft: #33260F;
+    --crit: #E28A7C;
+    --crit-soft: #38201C;
+    --good: #7FBFA3;
+    --good-soft: #14291F;
+  }
+
+  :root[data-theme="light"] {
+    --ground: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface-sunken: #F3F1ED;
+    --ink: #1C1B1F;
+    --ink-soft: #4A4750;
+    --ink-mute: #6B6673;
+    --line: #E2DFD9;
+    --line-strong: #CFCAC2;
+    --accent: #4F46A3;
+    --accent-soft: #EEECF8;
+    --accent-line: #C7C1E8;
+    --warn: #B45309;
+    --warn-soft: #FDF3E4;
+    --crit: #A13A2E;
+    --crit-soft: #FBEDEA;
+    --good: #3F6F5B;
+    --good-soft: #E9F2EE;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--pad) 6rem;
+  }
+
+  .col { max-width: var(--measure); }
+
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; text-wrap: balance; line-height: 1.15; }
+
+  h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); letter-spacing: -0.02em; margin: 0 0 1rem; }
+  h2 { font-size: clamp(1.65rem, 3.4vw, 2.3rem); letter-spacing: -0.015em; margin: 0 0 .5rem; }
+  h3 { font-size: 1.28rem; margin: 2.4rem 0 .6rem; }
+  h4 { font-size: 1.04rem; font-family: var(--body); font-weight: 700; margin: 1.6rem 0 .4rem; }
+
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--body);
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 .7rem;
+  }
+
+  .lede { font-size: 1.16rem; color: var(--ink-soft); }
+
+  /* ---------- header ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding: clamp(3rem, 8vw, 5.5rem) 0 2.6rem;
+    margin-bottom: 3rem;
+  }
+  .masthead .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem 1.4rem;
+    font-size: .82rem; color: var(--ink-mute);
+    margin-top: 1.6rem; padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+  }
+  .masthead .meta b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding: 3.4rem 0 1rem; border-top: 1px solid var(--line); margin-top: 2.4rem; }
+  section:first-of-type { border-top: 0; margin-top: 0; }
+  .sec-num {
+    font-family: var(--mono); font-size: .78rem; color: var(--accent);
+    letter-spacing: .04em; display: block; margin-bottom: .5rem;
+  }
+
+  /* ---------- callouts ---------- */
+  .note {
+    border-left: 3px solid var(--accent-line);
+    background: var(--accent-soft);
+    padding: 1.1rem 1.3rem;
+    margin: 1.6rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .note.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+  .note.crit { border-left-color: var(--crit); background: var(--crit-soft); }
+  .note p:last-child { margin-bottom: 0; }
+  .note .tag {
+    display: block; font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: .45rem; color: var(--ink-soft);
+  }
+
+  /* ---------- tables ---------- */
+  .scroll { overflow-x: auto; margin: 1.4rem 0; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; min-width: 560px; }
+  th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    background: var(--surface-sunken); font-weight: 700; font-size: .76rem;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+    position: sticky; top: 0;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td code, th code { font-size: .82em; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  code {
+    font-family: var(--mono); font-size: .86em;
+    background: var(--surface-sunken); padding: .12em .38em;
+    border-radius: 4px; border: 1px solid var(--line);
+  }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 1rem; margin: 1.6rem 0; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1.2rem 1.3rem;
+  }
+  .card h4 { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .k {
+    font-family: var(--mono); font-size: .72rem; color: var(--ink-mute);
+    letter-spacing: .05em; text-transform: uppercase; display: block; margin-bottom: .5rem;
+  }
+
+  /* profile accent stripes — encodes which persona a card belongs to */
+  .card.aluno { border-top: 3px solid var(--accent); }
+  .card.prof  { border-top: 3px solid var(--good); }
+  .card.resp  { border-top: 3px solid var(--warn); }
+
+  ul, ol { padding-left: 1.25rem; margin: 0 0 1.1rem; }
+  li { margin-bottom: .45rem; }
+  li::marker { color: var(--ink-mute); }
+
+  .pill {
+    display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; padding: .18em .55em; border-radius: 4px;
+    border: 1px solid currentColor; vertical-align: middle;
+  }
+  .pill.p-aluno { color: var(--accent); }
+  .pill.p-prof { color: var(--good); }
+  .pill.p-resp { color: var(--warn); }
+  .pill.p-crit { color: var(--crit); }
+
+  /* ---------- wireframes ---------- */
+  .wf {
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: 12px; padding: 1rem; margin: 1.3rem 0;
+  }
+  .wf-cap {
+    font-size: .78rem; color: var(--ink-mute); margin: .6rem .2rem 0;
+    font-family: var(--body);
+  }
+  .wf svg { display: block; width: 100%; height: auto; }
+
+  /* SVG wireframe tokens */
+  .s-fill { fill: var(--surface-sunken); }
+  .s-line { stroke: var(--line-strong); fill: none; }
+  .s-ink { fill: var(--ink); }
+  .s-soft { fill: var(--ink-soft); }
+  .s-mute { fill: var(--ink-mute); }
+  .s-acc { fill: var(--accent); }
+  .s-acc-soft { fill: var(--accent-soft); }
+  .s-warn { fill: var(--warn); }
+  .s-crit { fill: var(--crit); }
+  .s-good { fill: var(--good); }
+  .s-white { fill: var(--surface); }
+  .t { font-family: var(--body); font-size: 11px; fill: var(--ink-soft); }
+  .t-sm { font-family: var(--body); font-size: 9px; fill: var(--ink-mute); }
+  .t-lg { font-family: var(--body); font-size: 15px; font-weight: 600; fill: var(--ink); }
+  .t-xl { font-family: var(--body); font-size: 21px; font-weight: 700; fill: var(--ink); }
+  .t-mono { font-family: var(--mono); font-size: 9px; fill: var(--ink-mute); }
+
+  /* ---------- misc ---------- */
+  .toc {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1.2rem 1.4rem; margin: 2rem 0 0;
+  }
+  .toc ol { margin: 0; padding-left: 1.1rem; columns: 2; column-gap: 2rem; }
+  .toc li { margin-bottom: .3rem; break-inside: avoid; }
+  .toc a { text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  @media (max-width: 620px) { .toc ol { columns: 1; } }
+
+  .stack-choice {
+    display: grid; grid-template-columns: auto 1fr; gap: .5rem 1rem;
+    align-items: baseline; margin: 1.2rem 0;
+    font-size: .93rem;
+  }
+  .stack-choice dt { font-weight: 700; color: var(--ink); }
+  .stack-choice dd { margin: 0; color: var(--ink-soft); }
+
+  .swatches { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.2rem 0; }
+  .sw { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; width: 128px; }
+  .sw .chip { height: 46px; }
+  .sw .lbl { padding: .4rem .55rem; font-size: .7rem; }
+  .sw .lbl b { display: block; color: var(--ink); font-size: .74rem; }
+  .sw .lbl span { font-family: var(--mono); color: var(--ink-mute); font-size: .68rem; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 4rem; padding-top: 2rem;
+    color: var(--ink-mute); font-size: .86rem;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">CogniKids · Fase 2 · Documento de fundação</p>
+  <h1>Reconstruir o front-end sem repetir o erro de vigiar a criança</h1>
+  <p class="lede col">Stack, arquitetura, diretrizes de UI/UX para usuários neurodivergentes e wireframes dos três perfis — assentados sobre os 108 endpoints que a API hoje entrega.</p>
+  <div class="meta">
+    <span><b>Backend</b> Flask · 125 rotas · 182 testes</span>
+    <span><b>Front atual</b> Streamlit · 4.225 linhas · sem tela de aluno</span>
+    <span><b>Alvo</b> React + TypeScript + Vite (PWA)</span>
+    <span><b>Data</b> 26 jul 2026</span>
+  </div>
+
+  <nav class="toc" aria-label="Sumário">
+    <ol>
+      <li><a href="#s1">O problema que o front precisa resolver</a></li>
+      <li><a href="#s2">Princípios: o teste DAD</a></li>
+      <li><a href="#s3">Necessidades, não diagnósticos</a></li>
+      <li><a href="#s4">Necessidades conflitantes</a></li>
+      <li><a href="#s0">Backend construído nesta etapa</a></li>
+      <li><a href="#s5">Stack e arquitetura</a></li>
+      <li><a href="#s6">Design system</a></li>
+      <li><a href="#s7">Inventário de telas</a></li>
+      <li><a href="#s8">Wireframes — Aluno</a></li>
+      <li><a href="#s9">Wireframes — Professor</a></li>
+      <li><a href="#s10">Wireframes — Responsável</a></li>
+      <li><a href="#s11">Riscos e decisões pendentes</a></li>
+      <li><a href="#s12">Roteiro sugerido</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ============================================= -->
+<section id="s1">
+  <span class="sec-num">01</span>
+  <h2>O problema que o front precisa resolver</h2>
+  <div class="col">
+    <p>O front atual foi feito para demonstrar a arquitetura, e cumpriu esse papel. Mas ele tem uma ausência estrutural: <b>não existe tela de aluno</b>. Os módulos hoje são de professor e responsável — a criança é apenas o objeto medido pela pulseira.</p>
+    <p>Isso não é um detalhe de escopo. É exatamente a crítica que a literatura de autodefesa autista faz à tecnologia para autismo, e é o primeiro obstáculo que o projeto vai enfrentar num comitê de ética na Fase 2.</p>
+  </div>
+
+  <div class="note crit">
+    <span class="tag">O que a literatura diz</span>
+    <p>Boa parte da tecnologia para autismo é <b>construída para observar</b> — rastreando olhar, movimento e “engajamento” para alimentar dashboards e métricas — enquanto a pessoa autista absorve o risco e raramente ganha mais controle sobre a própria vida.</p>
+  </div>
+
+  <div class="col">
+    <p>O CogniKids, como está, se encaixa nessa descrição: sensores medem a criança, o modelo classifica a criança, o dashboard exibe a criança — e a criança não tem interface. O front novo é a oportunidade de inverter isso, e essa inversão é também o argumento científico mais forte que o projeto pode levar ao SBCUP.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s2">
+  <span class="sec-num">02</span>
+  <h2>Princípios: o teste DAD</h2>
+  <div class="col">
+    <p>Adoto o framework <b>DAD — Data, Autonomy, Dignity</b> como critério de aceitação de cada tela. Toda funcionalidade precisa passar nos três antes de entrar no backlog.</p>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="k">Data</span>
+      <h4>A criança sabe o que é coletado?</h4>
+      <p>Nada de coleta invisível. O app do aluno mostra, em linguagem simples, que a pulseira está ligada, o que ela mede e quem vê. Sensor desligado é um estado visível, não escondido em configuração.</p>
+    </div>
+    <div class="card">
+      <span class="k">Autonomy</span>
+      <h4>A criança tem controle real?</h4>
+      <p>O aluno pode pedir pausa, registrar como se sente e discordar do que o sistema inferiu. A opção “não foi isso que eu senti” é um dado de produto — e de pesquisa — não um enfeite.</p>
+    </div>
+    <div class="card">
+      <span class="k">Dignity</span>
+      <h4>O sistema trata a criança como pessoa?</h4>
+      <p>Vocabulário sem patologização: “momento difícil”, não “episódio de crise”. Nenhuma tela expõe um aluno para os colegas. Nenhum dado biométrico aparece com estética de prontuário na interface dela.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="tag">Consequência de produto</span>
+    <p>Isso muda a hierarquia do app do aluno: a tela inicial não é um relatório do que o sistema sabe sobre ele, é um conjunto de <b>ações que ele pode tomar</b>. O dado biométrico bruto (BPM, GSR) <b>nunca</b> aparece para a criança — só para professor e responsável.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s3">
+  <span class="sec-num">03</span>
+  <h2>Necessidades, não diagnósticos</h2>
+  <div class="col">
+    <p>A cobertura precisa ser ampla — TEA, TDAH, dislexia, bipolaridade, borderline, Tourette e o que mais existir. Mas a interface <b>não deriva de diagnóstico</b>, e essa é uma decisão técnica com três justificativas:</p>
+    <ol>
+      <li><b>Diagnóstico não determina necessidade de interface.</b> Duas crianças com o mesmo laudo de TEA podem ter perfis sensoriais opostos — uma busca estímulo, a outra evita. A variação dentro de um diagnóstico costuma ser maior que entre diagnósticos.</li>
+      <li><b>Comorbidade é a regra.</b> TEA+TDAH, dislexia+TDAH, TEA+ansiedade. Presets por diagnóstico entram em conflito direto e não se somam: qual vence quando a criança tem três?</li>
+      <li><b>Diagnóstico é dado sensível de saúde de menor</b> (LGPD art. 11, categoria especial). Perguntar “ela se incomoda com sons altos?” obtém o que a interface precisa sem coletar categoria especial de dado.</li>
+    </ol>
+    <p>O responsável responde sobre o que <b>observa no dia a dia</b>, sem precisar de laudo. Cada resposta mapeia para tokens de interface. A tabela abaixo mostra a correspondência — as condições aparecem só para explicar a origem da regra; o sistema nunca as nomeia.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th style="width:20%">Perfil</th><th style="width:38%">Necessidade dominante</th><th style="width:42%">Decisão de interface</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>TEA</b><br><span class="t-sm">inclui Asperger</span></td>
+          <td>Previsibilidade e baixa carga sensorial. Mudança inesperada de layout ou som gera desregulação.</td>
+          <td>Zero animação por padrão. Navegação idêntica em todas as telas. Linguagem literal, sem metáfora ou ironia. Avisar antes de qualquer transição.</td>
+        </tr>
+        <tr>
+          <td><b>TDAH</b></td>
+          <td>Função executiva e cegueira temporal. Informação escondida em submenu deixa de existir.</td>
+          <td>Máximo 3–4 opções por tela, com padrão inteligente. Nada de menu profundo. Temporizadores visuais concretos em vez de “daqui a pouco”. Sem limite de tempo em formulário.</td>
+        </tr>
+        <tr>
+          <td><b>Dislexia</b></td>
+          <td>Decodificação de texto. Bloco denso de texto é barreira absoluta.</td>
+          <td>Todo texto acompanhado de ícone. Entressilha e altura de linha ampliadas. Fonte alternativa opcional. Áudio como saída alternativa, nunca automático.</td>
+        </tr>
+        <tr>
+          <td><b>Bipolaridade<br>e borderline</b></td>
+          <td>Variação de estado afetivo. Interface que julga o humor causa dano.</td>
+          <td>Nenhum registro é rotulado “bom” ou “ruim”. Sem sequências (“streaks”) que punam o dia ruim. Sem comparação com outros alunos. Retirar consentimento é sempre possível.</td>
+        </tr>
+        <tr>
+          <td><b>Tourette</b></td>
+          <td>Movimento involuntário gera toque acidental e falso positivo no acelerômetro.</td>
+          <td>Alvos de toque ≥ 56 px com espaçamento generoso. Toda ação destrutiva é desfazível. Nenhuma ação confirmada por toque duplo ou gesto de precisão.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="tag">Limite honesto — importante para o artigo</span>
+    <p>A <b>interface</b> cobre esse espectro amplo, e o faz sem depender de diagnóstico. O <b>modelo de ML não</b>: ele foi treinado exclusivamente com dados sintéticos derivados de literatura de TEA, e assinaturas fisiológicas de desregulação diferem entre condições. Afirmar cobertura clínica multi-condição sem validação seria insustentável na revisão.</p>
+    <p>A formulação defensável para o artigo é: <b>interface universalmente adaptável, classificador validado para TEA</b>. Isso é mais forte do que parece — a adaptação por necessidades funcionais é, em si, uma contribuição metodológica, e independe do escopo clínico do modelo.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s4">
+  <span class="sec-num">04</span>
+  <h2>Necessidades conflitantes</h2>
+  <div class="col">
+    <p>Aqui está a razão técnica pela qual sua escolha de “modo adaptável” é a correta, e não apenas um recurso a mais. As necessidades <b>colidem entre si</b>: não existe um layout único que sirva a todos.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th style="width:34%">Tensão</th><th style="width:33%">Lado A</th><th style="width:33%">Lado B</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Estímulo visual</b></td>
+          <td><span class="pill p-crit">TEA</span> Cor saturada e movimento causam sobrecarga</td>
+          <td><span class="pill p-aluno">TDAH</span> Interface apagada demais não sustenta atenção</td>
+        </tr>
+        <tr>
+          <td><b>Densidade</b></td>
+          <td><span class="pill p-aluno">TDAH</span> Tudo visível de uma vez; submenu esconde</td>
+          <td><span class="pill p-crit">TEA</span> Excesso simultâneo sobrecarrega</td>
+        </tr>
+        <tr>
+          <td><b>Texto</b></td>
+          <td><span class="pill p-resp">Dislexia</span> Menos texto, mais ícone</td>
+          <td><span class="pill p-crit">TEA</span> Ícone ambíguo confunde; rótulo literal ajuda</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col">
+    <p>A saída não é escolher um lado nem tirar a média — média não serve a ninguém. É <b>personalização como requisito de arquitetura</b>: o próprio W3C aponta a personalização como caminho central para acessibilidade cognitiva, dada essa diversidade.</p>
+    <p>Na prática isso significa um <b>painel de conforto</b>, acessível ao aluno e ajustável pelo responsável, que controla estímulo, densidade e texto — persistido no perfil, aplicado como atributo no <code>&lt;html&gt;</code> e resolvido via tokens CSS. Não é tela de configuração escondida: é a primeira coisa que se calibra no onboarding.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 250" role="img" aria-label="Painel de conforto com três controles: estímulo, densidade e texto, cada um com três níveis">
+      <rect x="0" y="0" width="900" height="250" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="250" rx="10" class="s-line"/>
+      <text x="28" y="38" class="t-lg">Como você prefere ver o app?</text>
+      <text x="28" y="58" class="t-sm">Pode mudar quando quiser. Nada disso é enviado para o professor.</text>
+
+      <!-- estimulo -->
+      <text x="28" y="94" class="t">Cores e movimento</text>
+      <rect x="28" y="104" width="250" height="46" rx="8" class="s-acc-soft"/>
+      <rect x="28" y="104" width="250" height="46" rx="8" class="s-line"/>
+      <rect x="34" y="110" width="78" height="34" rx="6" class="s-acc"/>
+      <text x="46" y="132" class="t" style="fill:var(--surface)">Calmo</text>
+      <text x="130" y="132" class="t-sm">Médio</text>
+      <text x="208" y="132" class="t-sm">Vivo</text>
+
+      <!-- densidade -->
+      <text x="322" y="94" class="t">Quanta coisa na tela</text>
+      <rect x="322" y="104" width="250" height="46" rx="8" class="s-fill"/>
+      <rect x="322" y="104" width="250" height="46" rx="8" class="s-line"/>
+      <text x="340" y="132" class="t-sm">Pouca</text>
+      <rect x="404" y="110" width="80" height="34" rx="6" class="s-acc"/>
+      <text x="418" y="132" class="t" style="fill:var(--surface)">Média</text>
+      <text x="500" y="132" class="t-sm">Tudo</text>
+
+      <!-- texto -->
+      <text x="616" y="94" class="t">Texto</text>
+      <rect x="616" y="104" width="256" height="46" rx="8" class="s-fill"/>
+      <rect x="616" y="104" width="256" height="46" rx="8" class="s-line"/>
+      <rect x="622" y="110" width="96" height="34" rx="6" class="s-acc"/>
+      <text x="632" y="132" class="t" style="fill:var(--surface)">Só figura</text>
+      <text x="730" y="132" class="t-sm">Figura+letra</text>
+
+      <line x1="28" y1="182" x2="872" y2="182" class="s-line"/>
+      <text x="28" y="208" class="t">Prévia ao vivo</text>
+      <rect x="28" y="218" width="140" height="18" rx="4" class="s-acc-soft"/>
+      <rect x="180" y="218" width="140" height="18" rx="4" class="s-fill"/>
+      <text x="340" y="232" class="t-sm">A tela abaixo muda enquanto você escolhe — sem salvar, sem confirmar.</text>
+    </svg>
+    <p class="wf-cap"><b>Painel de conforto.</b> Três eixos independentes resolvem as três tensões da tabela acima. Prévia ao vivo evita que a criança precise imaginar o resultado — requisito de carga de memória do W3C.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s0">
+  <span class="sec-num">05</span>
+  <h2>Backend construído nesta etapa</h2>
+  <div class="col">
+    <p>As decisões acima não ficaram no papel: o backend já as sustenta. Foram <b>17 rotas novas</b> (108 → 125) e <b>55 testes novos</b> (127 → 182), verificados com MongoDB real e com mongomock.</p>
+  </div>
+
+  <h3>Perfil funcional de acessibilidade</h3>
+  <div class="col">
+    <p>Doze perguntas sobre comportamento observável, agrupadas em seis dimensões (sensorial, linguagem, atenção, previsibilidade, motor, afetivo). Um teste automatizado verifica que <b>nenhuma pergunta menciona diagnóstico</b> — “autismo”, “TDAH”, “laudo” e correlatos fazem a suíte falhar.</p>
+    <p>A resolução de conflito é a peça central. Quando duas necessidades pedem valores opostos do mesmo token, <b>vence o mais protetivo</b>:</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:40%">Respostas do responsável</th><th style="width:26%">Conflito</th><th style="width:34%">Resolução</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>“Incomoda-se com sons altos” = <b>sim</b><br>“Perde interesse se é parado” = <b>sim</b></td>
+          <td><code>estimulo</code>: calmo × vivo</td>
+          <td><code>calmo</code> — proteção sensorial prevalece</td>
+        </tr>
+        <tr>
+          <td>“Distrai-se com muita coisa” = <b>sim</b></td>
+          <td><code>densidade</code></td>
+          <td><code>minima</code> + <code>movimento: nenhum</code></td>
+        </tr>
+        <tr>
+          <td>“Ainda não lê”</td>
+          <td><code>texto</code></td>
+          <td><code>so_figura</code> + áudio disponível</td>
+        </tr>
+        <tr>
+          <td>“Dificuldade com botões pequenos” = <b>sim</b></td>
+          <td><code>alvo_toque</code></td>
+          <td><code>extra_grande</code> + confirmação de ações</td>
+        </tr>
+        <tr>
+          <td>“Humor varia bastante” = <b>sim</b></td>
+          <td>—</td>
+          <td>Desliga sequências e comparações</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">Autonomia dentro de limites</span>
+    <p>A criança ajusta <b>estímulo, densidade e texto</b> no painel de conforto. Os demais tokens são proteções definidas pelo responsável e o backend <b>ignora</b> tentativas de alterá-los — desligar <code>confirmar_acoes</code> por toque acidental anularia justamente a proteção de quem tem movimento involuntário. Há teste para isso.</p>
+  </div>
+
+  <h3>Consentimento granular</h3>
+  <div class="col">
+    <p>Quatro finalidades independentes e revogáveis, conforme LGPD art. 14 §1º (consentimento específico e em destaque, dado pelo responsável legal):</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <span class="k">uso_app</span>
+      <h4>Usar o aplicativo</h4>
+      <p>A criança entra, registra como se sente e pede pausa. Base de tudo.</p>
+    </div>
+    <div class="card">
+      <span class="k">coleta_biometrica</span>
+      <h4>Coletar dados da pulseira</h4>
+      <p>Sem isso, o app continua funcionando — apenas não detecta desregulação por sensor.</p>
+    </div>
+    <div class="card">
+      <span class="k">compartilhar_escola</span>
+      <h4>Compartilhar com a escola</h4>
+      <p>O professor vê registros e alertas. Sem isso, o aluno some das listagens do professor.</p>
+    </div>
+    <div class="card">
+      <span class="k">uso_pesquisa</span>
+      <h4>Usar em pesquisa</h4>
+      <p>Recusar não tem consequência alguma sobre o restante — verificado por teste.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <p>Três propriedades foram implementadas e testadas:</p>
+    <ul>
+      <li><b>Nega por padrão.</b> Sem documento de consentimento, nada é autorizado. O estado inicial não é permissivo.</li>
+      <li><b>Revogação com efeito imediato</b> (art. 8º §5º). Um teste envia leitura da pulseira (201), revoga, envia de novo (403) e confirma que só um registro foi gravado. O bloqueio está na API <i>e</i> na ponte MQTT — que é o caminho real dos dados.</li>
+      <li><b>Auditável.</b> Cada mudança grava um evento imutável com de/para, autor e data. É o que sustenta a prestação de contas perante um comitê de ética.</li>
+    </ul>
+  </div>
+
+  <div class="note crit">
+    <span class="tag">Mudança de comportamento — atenção</span>
+    <p>O vínculo pedagógico <b>deixou de ser suficiente</b> para o professor ver dados do aluno: agora exige consentimento vigente. Um aluno sem consentimento não aparece em <code>all_students</code>, <code>crisis_alerts</code>, <code>feelings/all</code> nem no histórico. A gestão de cadastro (matrícula) continua funcionando — revogar consentimento não tira a criança da turma, apenas impede o acesso aos dados sensíveis.</p>
+  </div>
+
+  <h3>Pedido de pausa</h3>
+  <div class="col">
+    <p>A funcionalidade que materializa o pilar <i>Autonomy</i>. As estratégias vêm do kit de apoio do responsável — nunca genéricas — e são ordenadas pelo que já funcionou para aquela criança, seguindo o padrão dos aplicativos de regulação emocional com validação publicada.</p>
+    <p>Detalhe deliberado: <b>pedir sem escolher estratégia é sempre possível</b>. Em desregulação, escolher já pode ser demais.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:44%">Rota</th><th style="width:16%">Perfil</th><th style="width:40%">Função</th></tr></thead>
+      <tbody>
+        <tr><td><code>GET /api/breaks/options</code></td><td><span class="pill p-aluno">aluno</span></td><td>Estratégias do kit, ordenadas por eficácia</td></tr>
+        <tr><td><code>POST /api/breaks</code></td><td><span class="pill p-aluno">aluno</span></td><td>Pede pausa (estratégia opcional) e notifica o professor</td></tr>
+        <tr><td><code>GET /api/breaks/pending</code></td><td><span class="pill p-prof">professor</span></td><td>Pedidos em aberto das suas turmas</td></tr>
+        <tr><td><code>PUT /api/breaks/{id}/acknowledge</code></td><td><span class="pill p-prof">professor</span></td><td>Confirma que está atendendo</td></tr>
+        <tr><td><code>PUT /api/breaks/{id}/close</code></td><td><span class="pill p-prof">prof · aluno</span></td><td>Encerra e registra se ajudou</td></tr>
+        <tr><td><code>GET /api/breaks/student/{id}</code></td><td><span class="pill p-resp">prof · resp</span></td><td>Histórico e eficácia por estratégia</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s5">
+  <span class="sec-num">06</span>
+  <h2>Stack e arquitetura</h2>
+  <div class="col">
+    <p>Confirmando sua escolha: <b>React + TypeScript + Vite</b>. É a decisão certa aqui, e o motivo é específico — o controle fino sobre animação, foco e estímulo sensorial que o perfil neurodivergente exige não é alcançável em Streamlit nem em wrappers Python de UI.</p>
+  </div>
+
+  <h3>Dependências e a razão de cada uma</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:26%">Camada</th><th style="width:30%">Escolha</th><th style="width:44%">Por que esta, aqui</th></tr></thead>
+      <tbody>
+        <tr><td>Build</td><td><code>Vite</code></td><td>HMR rápido; build enxuto. Sem SSR porque o app é 100% autenticado — Next.js traria complexidade sem benefício.</td></tr>
+        <tr><td>Linguagem</td><td><code>TypeScript</code> estrito</td><td>Os contratos da API (perfis, severidade, biometria) são o núcleo do domínio; tipagem evita a classe de bug que já custou caro no backend.</td></tr>
+        <tr><td>Roteamento</td><td><code>React Router</code></td><td>Rotas por perfil com guarda de autorização espelhando o <code>authz.py</code> do backend.</td></tr>
+        <tr><td>Dados</td><td><code>TanStack Query</code></td><td>Cache, revalidação e <i>polling</i> de alertas sem escrever máquina de estado à mão. Chave: alertas precisam de atualização frequente; o resto, não.</td></tr>
+        <tr><td>Componentes</td><td><code>Radix UI</code> (headless)</td><td>Gestão de foco, ARIA e navegação por teclado corretas de fábrica — e sem estilo imposto, então o modo adaptável controla 100% da aparência.</td></tr>
+        <tr><td>Estilo</td><td><code>Tailwind</code> + tokens CSS</td><td>Tokens em custom properties permitem trocar densidade e estímulo em tempo real sem recompilar nem duplicar componente.</td></tr>
+        <tr><td>Formulários</td><td><code>React Hook Form</code> + <code>Zod</code></td><td>Validação com mensagem de erro clara e reversível — requisito direto de acessibilidade cognitiva.</td></tr>
+        <tr><td>Gráficos</td><td><code>Recharts</code></td><td>Só nas telas de professor e responsável. O aluno não vê gráfico de si mesmo.</td></tr>
+        <tr><td>PWA</td><td><code>vite-plugin-pwa</code></td><td>Instalável no celular e no tablet, sem loja de aplicativos. Cobre os três contextos de uso que você indicou.</td></tr>
+        <tr><td>Testes</td><td><code>Vitest</code> + <code>Testing Library</code> + <code>axe</code></td><td>Acessibilidade verificada automaticamente, no mesmo espírito dos 127 testes do backend.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">Decisão deliberada</span>
+    <p>Sem biblioteca de componentes pronta (MUI, Chakra, shadcn com tema padrão). Elas trazem animação, sombra e densidade embutidas que teriam de ser desfeitas uma a uma. Radix entrega o comportamento acessível; a aparência é inteiramente nossa, governada pelos tokens.</p>
+  </div>
+
+  <h3>Estrutura de pastas</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:34%">Caminho</th><th>Conteúdo</th></tr></thead>
+      <tbody>
+        <tr><td><code>src/app/</code></td><td>Bootstrap, providers, roteador, guardas de perfil</td></tr>
+        <tr><td><code>src/design/</code></td><td>Tokens, tema, primitivos (Botão, Campo, Cartão), painel de conforto</td></tr>
+        <tr><td><code>src/api/</code></td><td>Cliente HTTP, tipos gerados do <code>swagger.json</code>, <i>hooks</i> por domínio</td></tr>
+        <tr><td><code>src/features/aluno/</code></td><td>Telas do estudante — o módulo mais sensível e de maior prioridade</td></tr>
+        <tr><td><code>src/features/professor/</code></td><td>Turmas, alertas, notas, agenda, galeria, Q&amp;A</td></tr>
+        <tr><td><code>src/features/responsavel/</code></td><td>Filhos, kit de apoio, alertas, mensagens</td></tr>
+        <tr><td><code>src/features/comum/</code></td><td>Login, perfil, mensagens, notificações, fórum</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Autenticação</h3>
+  <div class="col">
+    <p>O backend emite JWT HS256 com validade de 24 h, contendo <code>user_id</code>, <code>email</code>, <code>role</code> e <code>exp</code>. Duas implicações para o front:</p>
+    <ul>
+      <li><b>O papel vem do token, mas a autorização é do servidor.</b> Usar <code>role</code> apenas para escolher a navegação — nunca como garantia. O <code>authz.py</code> é a autoridade; o front só evita mostrar caminho que resultaria em 403.</li>
+      <li><b>Expiração precisa ser gentil.</b> Sessão que cai sem aviso e descarta o que foi preenchido viola diretamente a diretriz de “evitar perda de dados e timeouts”. Avisar antes, preservar o estado local, reautenticar e retomar de onde parou.</li>
+    </ul>
+  </div>
+  <div class="note warn">
+    <span class="tag">Ponto a resolver com você</span>
+    <p>Login de aluno com e-mail e senha é uma barreira concreta para criança em alfabetização — o W3C recomenda explicitamente login que não dependa de memória. Sugiro avaliar código visual, QR ou PIN por imagem para o perfil aluno. Isso exige uma rota nova no backend; não está implementado.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s6">
+  <span class="sec-num">07</span>
+  <h2>Design system</h2>
+
+  <h3>Cor</h3>
+  <div class="col">
+    <p>A paleta base evita vermelho e laranja saturados como cor de interface — eles carregam carga de alerta e são gatilho de sobrecarga. O acento é um índigo dessaturado, presente mas sem urgência.</p>
+  </div>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#4F46A3"></div><div class="lbl"><b>Acento</b><span>#4F46A3</span></div></div>
+    <div class="sw"><div class="chip" style="background:#3F6F5B"></div><div class="lbl"><b>Estável</b><span>#3F6F5B</span></div></div>
+    <div class="sw"><div class="chip" style="background:#B45309"></div><div class="lbl"><b>Atenção</b><span>#B45309</span></div></div>
+    <div class="sw"><div class="chip" style="background:#A13A2E"></div><div class="lbl"><b>Prioritário</b><span>#A13A2E</span></div></div>
+    <div class="sw"><div class="chip" style="background:#6B6673"></div><div class="lbl"><b>Neutro</b><span>#6B6673</span></div></div>
+  </div>
+
+  <div class="note">
+    <span class="tag">Regra dura</span>
+    <p>Cor <b>nunca</b> é o único portador de significado. Todo estado carrega também forma e rótulo — exigência de WCAG 1.4.1 e condição para daltonismo, que é frequente e independe de neurodivergência. Nas telas de aluno, os estados semânticos (atenção, prioritário) não aparecem: são vocabulário de adulto.</p>
+  </div>
+
+  <h3>Tipografia</h3>
+  <div class="col">
+    <p>Uma sans de alta legibilidade em toda a interface, com <b>Atkinson Hyperlegible</b> como primeira escolha — desenhada pelo Braille Institute para maximizar distinção entre caracteres ambíguos. Fonte para dislexia é opção do usuário, não padrão: a evidência mostra que familiaridade pesa mais que o desenho da fonte, e muitos usuários preferem Arial ou Verdana.</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Token</th><th class="num">Confortável</th><th class="num">Compacto</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td><code>--fs-body</code></td><td class="num">18 px</td><td class="num">16 px</td><td>Corpo</td></tr>
+        <tr><td><code>--lh-body</code></td><td class="num">1.7</td><td class="num">1.5</td><td>Altura de linha (mín. 1.5 por WCAG)</td></tr>
+        <tr><td><code>--tracking</code></td><td class="num">0.02em</td><td class="num">0</td><td>Entressilha</td></tr>
+        <tr><td><code>--touch</code></td><td class="num">56 px</td><td class="num">44 px</td><td>Alvo de toque (Tourette exige o maior)</td></tr>
+        <tr><td><code>--measure</code></td><td class="num">55ch</td><td class="num">70ch</td><td>Largura de leitura</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Movimento</h3>
+  <div class="col">
+    <p>Padrão do app: <b>sem animação</b>. Transição só onde comunica causa e efeito, limitada a 150 ms e apenas em opacidade. <code>prefers-reduced-motion</code> é respeitado, mas não basta — a maioria das crianças não terá esse ajuste ativado no sistema, então o padrão do produto já é o conservador. Nada pisca. Nada se move sozinho. Nada toca som sem o usuário pedir.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s7">
+  <span class="sec-num">08</span>
+  <h2>Inventário de telas</h2>
+  <div class="col">
+    <p>Derivado dos 108 endpoints. A coluna <i>API</i> indica se o backend já sustenta a tela hoje.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:26%">Tela</th><th style="width:12%">Perfil</th><th style="width:46%">Função</th><th style="width:16%">API</th></tr></thead>
+      <tbody>
+        <tr><td>Entrar</td><td><span class="pill p-aluno">todos</span></td><td>Autenticação</td><td>pronta</td></tr>
+        <tr><td>Consentimento</td><td><span class="pill p-resp">responsável</span></td><td>Quatro finalidades, revogáveis e auditadas</td><td>pronta</td></tr>
+        <tr><td>Perfil funcional</td><td><span class="pill p-resp">responsável</span></td><td>12 perguntas sobre necessidades observáveis</td><td>pronta</td></tr>
+        <tr><td>Painel de conforto</td><td><span class="pill p-aluno">aluno</span></td><td>Calibrar estímulo, densidade, texto</td><td>pronta</td></tr>
+        <tr><td>Meu dia</td><td><span class="pill p-aluno">aluno</span></td><td>Início: registrar sentimento, pedir pausa</td><td>pronta</td></tr>
+        <tr><td>Como estou</td><td><span class="pill p-aluno">aluno</span></td><td>Registro de sentimento por pictograma</td><td>pronta</td></tr>
+        <tr><td>Preciso de pausa</td><td><span class="pill p-aluno">aluno</span></td><td>Pedido de pausa + estratégia de acalmamento</td><td>pronta</td></tr>
+        <tr><td>Minhas coisas</td><td><span class="pill p-aluno">aluno</span></td><td>Desafios, metas, galeria</td><td>pronta</td></tr>
+        <tr><td>Turmas</td><td><span class="pill p-prof">professor</span></td><td>CRUD de turmas e matrículas</td><td>pronta</td></tr>
+        <tr><td>Painel da turma</td><td><span class="pill p-prof">professor</span></td><td>Alertas ativos, alunos, resumo</td><td>pronta</td></tr>
+        <tr><td>Aluno em detalhe</td><td><span class="pill p-prof">professor</span></td><td>Histórico, sentimentos, kit, notas</td><td>pronta</td></tr>
+        <tr><td>Notas e avaliações</td><td><span class="pill p-prof">professor</span></td><td>Lançamento e médias</td><td>pronta</td></tr>
+        <tr><td>Agenda</td><td><span class="pill p-prof">prof · aluno</span></td><td>Eventos da turma</td><td>pronta</td></tr>
+        <tr><td>Meus filhos</td><td><span class="pill p-resp">responsável</span></td><td>Visão consolidada</td><td>pronta</td></tr>
+        <tr><td>Kit de apoio</td><td><span class="pill p-resp">responsável</span></td><td>Estratégias, gatilhos, contatos</td><td>pronta</td></tr>
+        <tr><td>Mensagens</td><td><span class="pill p-prof">prof · resp</span></td><td>Conversa entre perfis diferentes</td><td>pronta</td></tr>
+        <tr><td>Fórum</td><td><span class="pill p-resp">prof · resp</span></td><td>Discussão da comunidade</td><td>pronta</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">Estado do backend</span>
+    <p>Todas as telas acima têm API. As três marcadas em cinza na versão anterior deste documento — consentimento, perfil funcional e pedido de pausa — <b>foram implementadas</b> e estão descritas na seção 05. A única lacuna remanescente é o login acessível para o aluno.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s8">
+  <span class="sec-num">09</span>
+  <h2>Wireframes — Aluno</h2>
+  <div class="col">
+    <p>O perfil de maior cuidado. Três telas, navegação rasa, nenhuma informação biométrica.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 470" role="img" aria-label="Tela inicial do aluno com duas ações grandes e status da pulseira">
+      <rect x="0" y="0" width="900" height="470" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="470" rx="10" class="s-line"/>
+
+      <!-- telefone -->
+      <rect x="286" y="18" width="328" height="434" rx="20" class="s-fill"/>
+      <rect x="286" y="18" width="328" height="434" rx="20" class="s-line"/>
+
+      <text x="310" y="58" class="t-xl">Oi, Ana</text>
+      <text x="310" y="80" class="t-sm">Terça, 26 de julho</text>
+
+      <!-- acao 1 -->
+      <rect x="310" y="98" width="280" height="96" rx="14" class="s-acc"/>
+      <circle cx="358" cy="146" r="22" class="s-white" opacity="0.9"/>
+      <text x="350" y="153" style="font-size:20px">🙂</text>
+      <text x="394" y="140" class="t-lg" style="fill:var(--surface)">Como estou</text>
+      <text x="394" y="160" class="t-sm" style="fill:var(--surface);opacity:.85">Marcar como me sinto agora</text>
+
+      <!-- acao 2 -->
+      <rect x="310" y="206" width="280" height="96" rx="14" class="s-white"/>
+      <rect x="310" y="206" width="280" height="96" rx="14" class="s-line" stroke-width="2"/>
+      <circle cx="358" cy="254" r="22" class="s-acc-soft"/>
+      <text x="350" y="261" style="font-size:20px">🌿</text>
+      <text x="394" y="248" class="t-lg">Preciso de pausa</text>
+      <text x="394" y="268" class="t-sm">Avisar que quero um tempo</text>
+
+      <!-- status pulseira -->
+      <rect x="310" y="318" width="280" height="56" rx="10" class="s-good-soft" style="fill:var(--good-soft)"/>
+      <circle cx="334" cy="346" r="7" class="s-good"/>
+      <text x="352" y="343" class="t">Pulseira ligada</text>
+      <text x="352" y="360" class="t-sm">Mede batimento. Prof. Carla vê.</text>
+      <rect x="520" y="334" width="56" height="24" rx="6" class="s-white"/>
+      <rect x="520" y="334" width="56" height="24" rx="6" class="s-line"/>
+      <text x="533" y="350" class="t-sm">Desligar</text>
+
+      <!-- nav -->
+      <line x1="310" y1="396" x2="590" y2="396" class="s-line"/>
+      <text x="326" y="424" style="font-size:17px">🏠</text>
+      <text x="404" y="424" style="font-size:17px">⭐</text>
+      <text x="482" y="424" style="font-size:17px">📅</text>
+      <text x="556" y="424" style="font-size:17px">⚙️</text>
+      <text x="318" y="440" class="t-sm">Início</text>
+      <text x="392" y="440" class="t-sm">Minhas</text>
+      <text x="470" y="440" class="t-sm">Agenda</text>
+      <text x="546" y="440" class="t-sm">Ajustes</text>
+
+      <!-- anotacoes -->
+      <text x="24" y="120" class="t-mono">DAD · AUTONOMY</text>
+      <text x="24" y="138" class="t-sm">Início = ações que ela</text>
+      <text x="24" y="152" class="t-sm">pode tomar, não relatório</text>
+      <text x="24" y="166" class="t-sm">do que o sistema sabe.</text>
+      <line x1="24" y1="180" x2="286" y2="180" class="s-line" stroke-dasharray="3 3"/>
+
+      <text x="640" y="330" class="t-mono">DAD · DATA</text>
+      <text x="640" y="348" class="t-sm">Coleta sempre visível,</text>
+      <text x="640" y="362" class="t-sm">com quem vê nomeado</text>
+      <text x="640" y="376" class="t-sm">e desligar ao alcance.</text>
+      <line x1="614" y1="346" x2="636" y2="346" class="s-line" stroke-dasharray="3 3"/>
+
+      <text x="640" y="150" class="t-mono">TDAH</text>
+      <text x="640" y="168" class="t-sm">Duas ações. Nada</text>
+      <text x="640" y="182" class="t-sm">escondido em menu.</text>
+      <text x="640" y="196" class="t-sm">Alvos de 96 px.</text>
+      <line x1="614" y1="158" x2="636" y2="158" class="s-line" stroke-dasharray="3 3"/>
+    </svg>
+    <p class="wf-cap"><b>Meu dia.</b> Tela inicial do aluno. O status da pulseira é informação de primeira classe, não configuração — é o que materializa o “Data” do DAD.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 400" role="img" aria-label="Tela de registro de sentimento com grade de pictogramas">
+      <rect x="0" y="0" width="900" height="400" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="400" rx="10" class="s-line"/>
+
+      <rect x="286" y="18" width="328" height="364" rx="20" class="s-fill"/>
+      <rect x="286" y="18" width="328" height="364" rx="20" class="s-line"/>
+
+      <text x="310" y="52" class="t-sm">← Voltar</text>
+      <text x="310" y="84" class="t-xl">Como você está?</text>
+      <text x="310" y="106" class="t-sm">Toque no que combina com agora.</text>
+
+      <!-- grade 2x3 -->
+      <g>
+        <rect x="310" y="122" width="132" height="72" rx="12" class="s-white"/><rect x="310" y="122" width="132" height="72" rx="12" class="s-line" stroke-width="2"/>
+        <text x="330" y="160" style="font-size:22px">😀</text><text x="364" y="164" class="t">Bem</text>
+
+        <rect x="458" y="122" width="132" height="72" rx="12" class="s-white"/><rect x="458" y="122" width="132" height="72" rx="12" class="s-line" stroke-width="2"/>
+        <text x="478" y="160" style="font-size:22px">😐</text><text x="512" y="164" class="t">Mais ou menos</text>
+
+        <rect x="310" y="206" width="132" height="72" rx="12" class="s-white"/><rect x="310" y="206" width="132" height="72" rx="12" class="s-line" stroke-width="2"/>
+        <text x="330" y="244" style="font-size:22px">😟</text><text x="364" y="248" class="t">Preocupado</text>
+
+        <rect x="458" y="206" width="132" height="72" rx="12" class="s-acc-soft"/><rect x="458" y="206" width="132" height="72" rx="12" class="s-acc" stroke-width="3" style="stroke:var(--accent);fill:none"/>
+        <text x="478" y="244" style="font-size:22px">😣</text><text x="512" y="248" class="t">Difícil</text>
+
+        <rect x="310" y="290" width="132" height="72" rx="12" class="s-white"/><rect x="310" y="290" width="132" height="72" rx="12" class="s-line" stroke-width="2"/>
+        <text x="330" y="328" style="font-size:22px">😴</text><text x="364" y="332" class="t">Cansado</text>
+
+        <rect x="458" y="290" width="132" height="72" rx="12" class="s-white"/><rect x="458" y="290" width="132" height="72" rx="12" class="s-line" stroke-width="2"/>
+        <text x="478" y="328" style="font-size:22px">🤐</text><text x="512" y="332" class="t">Não quero dizer</text>
+      </g>
+
+      <text x="24" y="150" class="t-mono">DIGNITY</text>
+      <text x="24" y="168" class="t-sm">Nenhuma opção é</text>
+      <text x="24" y="182" class="t-sm">“errada”. Sem carinha</text>
+      <text x="24" y="196" class="t-sm">verde/vermelha,</text>
+      <text x="24" y="210" class="t-sm">sem pontuação.</text>
+
+      <text x="24" y="250" class="t-mono">TEA + DISLEXIA</text>
+      <text x="24" y="268" class="t-sm">Figura e palavra juntas.</text>
+      <text x="24" y="282" class="t-sm">Rótulo literal, sem</text>
+      <text x="24" y="296" class="t-sm">metáfora.</text>
+
+      <text x="640" y="250" class="t-mono">AUTONOMY</text>
+      <text x="640" y="268" class="t-sm">“Não quero dizer” é</text>
+      <text x="640" y="282" class="t-sm">resposta legítima —</text>
+      <text x="640" y="296" class="t-sm">recusar é um direito,</text>
+      <text x="640" y="310" class="t-sm">não uma falha.</text>
+      <line x1="592" y1="258" x2="636" y2="258" class="s-line" stroke-dasharray="3 3"/>
+    </svg>
+    <p class="wf-cap"><b>Como estou.</b> Seis opções em grade rasa. Sem escala numérica — abstração numérica é barreira cognitiva documentada. A ausência de julgamento atende ao requisito de bipolaridade/borderline.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 400" role="img" aria-label="Tela de pedido de pausa com escolha de estratégia">
+      <rect x="0" y="0" width="900" height="400" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="400" rx="10" class="s-line"/>
+
+      <rect x="286" y="18" width="328" height="364" rx="20" class="s-fill"/>
+      <rect x="286" y="18" width="328" height="364" rx="20" class="s-line"/>
+
+      <text x="310" y="52" class="t-sm">← Voltar</text>
+      <text x="310" y="84" class="t-xl">Pedir uma pausa</text>
+      <text x="310" y="106" class="t-sm">A Prof. Carla vai saber. Você não precisa explicar.</text>
+
+      <rect x="310" y="124" width="280" height="62" rx="12" class="s-white"/><rect x="310" y="124" width="280" height="62" rx="12" class="s-line" stroke-width="2"/>
+      <text x="330" y="162" style="font-size:19px">🎧</text>
+      <text x="364" y="152" class="t">Fone abafador</text>
+      <text x="364" y="169" class="t-sm">Funcionou nas últimas 3 vezes</text>
+
+      <rect x="310" y="196" width="280" height="62" rx="12" class="s-white"/><rect x="310" y="196" width="280" height="62" rx="12" class="s-line" stroke-width="2"/>
+      <text x="330" y="234" style="font-size:19px">🚪</text>
+      <text x="364" y="224" class="t">Sala de calma</text>
+      <text x="364" y="241" class="t-sm">Sair da sala por um tempo</text>
+
+      <rect x="310" y="268" width="280" height="62" rx="12" class="s-white"/><rect x="310" y="268" width="280" height="62" rx="12" class="s-line" stroke-width="2"/>
+      <text x="330" y="306" style="font-size:19px">💧</text>
+      <text x="364" y="296" class="t">Beber água</text>
+      <text x="364" y="313" class="t-sm">Uma volta rápida</text>
+
+      <text x="310" y="356" class="t-sm" style="fill:var(--accent)">Só quero avisar, sem escolher nada →</text>
+
+      <text x="24" y="150" class="t-mono">KIT DE APOIO</text>
+      <text x="24" y="168" class="t-sm">As opções vêm do kit</text>
+      <text x="24" y="182" class="t-sm">preenchido pelo</text>
+      <text x="24" y="196" class="t-sm">responsável — não são</text>
+      <text x="24" y="210" class="t-sm">genéricas.</text>
+
+      <text x="640" y="150" class="t-mono">EVIDÊNCIA</text>
+      <text x="640" y="168" class="t-sm">“Funcionou nas últimas</text>
+      <text x="640" y="182" class="t-sm">3 vezes” = estratégia</text>
+      <text x="640" y="196" class="t-sm">personalizada com base</text>
+      <text x="640" y="210" class="t-sm">no histórico, padrão dos</text>
+      <text x="640" y="224" class="t-sm">apps validados na área.</text>
+      <line x1="592" y1="158" x2="636" y2="158" class="s-line" stroke-dasharray="3 3"/>
+
+      <text x="640" y="330" class="t-mono">ESCAPE</text>
+      <text x="640" y="348" class="t-sm">Em desregulação, escolher</text>
+      <text x="640" y="362" class="t-sm">já é demais. Avisar sem</text>
+      <text x="640" y="376" class="t-sm">escolher é obrigatório.</text>
+    </svg>
+    <p class="wf-cap"><b>Preciso de pausa.</b> Requer backend novo. As estratégias vêm do kit de apoio do responsável, e o histórico de eficácia segue o padrão dos aplicativos de regulação emocional com validação publicada.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s9">
+  <span class="sec-num">10</span>
+  <h2>Wireframes — Professor</h2>
+  <div class="col">
+    <p>Aqui a lógica se inverte: é ferramenta de trabalho, densa, escaneada em segundos entre uma atividade e outra. Mas o alerta precisa levar a uma <b>ação</b>, não a um número.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 460" role="img" aria-label="Painel do professor com alerta prioritário e lista de turma">
+      <rect x="0" y="0" width="900" height="460" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="460" rx="10" class="s-line"/>
+
+      <!-- topo -->
+      <rect x="1" y="1" width="898" height="52" rx="10" class="s-fill"/>
+      <text x="24" y="33" class="t-lg">3º Ano B · 24 alunos</text>
+      <rect x="700" y="14" width="80" height="26" rx="6" class="s-white"/><rect x="700" y="14" width="80" height="26" rx="6" class="s-line"/>
+      <text x="714" y="31" class="t-sm">Mensagens</text>
+      <circle cx="800" cy="27" r="13" class="s-acc-soft"/><text x="795" y="31" class="t-sm">CS</text>
+
+      <!-- alerta -->
+      <rect x="24" y="74" width="852" height="92" rx="10" style="fill:var(--crit-soft)"/>
+      <rect x="24" y="74" width="6" height="92" rx="3" class="s-crit"/>
+      <text x="48" y="102" class="t-lg">Ana Sofia pode precisar de apoio agora</text>
+      <text x="48" y="122" class="t">Sinais de desregulação há 4 minutos · confiança 91%</text>
+      <text x="48" y="140" class="t-sm">No kit dela: fone abafador, sala de calma. Gatilho conhecido: ruído alto.</text>
+      <rect x="640" y="96" width="104" height="34" rx="8" class="s-crit"/>
+      <text x="656" y="118" class="t" style="fill:var(--surface)">Ver o que fazer</text>
+      <rect x="756" y="96" width="96" height="34" rx="8" class="s-white"/><rect x="756" y="96" width="96" height="34" rx="8" class="s-line"/>
+      <text x="770" y="118" class="t-sm">Já resolvi</text>
+
+      <!-- lista -->
+      <text x="24" y="196" class="t">Turma</text>
+      <line x1="24" y1="206" x2="876" y2="206" class="s-line"/>
+
+      <g>
+        <rect x="24" y="216" width="852" height="46" rx="8" class="s-fill"/>
+        <circle cx="50" cy="239" r="6" class="s-crit"/>
+        <text x="70" y="236" class="t">Ana Sofia</text><text x="70" y="252" class="t-sm">Marcou “difícil” às 10:12</text>
+        <text x="700" y="244" class="t-sm">Pausa pedida · 10:14</text>
+
+        <rect x="24" y="270" width="852" height="46" rx="8" class="s-white"/>
+        <circle cx="50" cy="293" r="6" class="s-warn"/>
+        <text x="70" y="290" class="t">Lucas Silva</text><text x="70" y="306" class="t-sm">Marcou “preocupado” às 9:40</text>
+        <text x="700" y="298" class="t-sm">Sem pedido</text>
+
+        <rect x="24" y="324" width="852" height="46" rx="8" class="s-white"/>
+        <circle cx="50" cy="347" r="6" class="s-good"/>
+        <text x="70" y="344" class="t">Beatriz Nunes</text><text x="70" y="360" class="t-sm">Marcou “bem” às 9:05</text>
+        <text x="700" y="352" class="t-sm">Sem pedido</text>
+
+        <rect x="24" y="378" width="852" height="46" rx="8" class="s-white"/>
+        <circle cx="50" cy="401" r="6" style="fill:var(--line-strong)"/>
+        <text x="70" y="398" class="t">Diogo Martins</text><text x="70" y="414" class="t-sm">Sem registro hoje</text>
+        <text x="700" y="406" class="t-sm">Pulseira desligada</text>
+      </g>
+
+      <text x="24" y="446" class="t-sm">Ordenado por quem precisa de atenção primeiro · atualiza sozinho</text>
+    </svg>
+    <p class="wf-cap"><b>Painel da turma.</b> O alerta traz a estratégia do kit junto — o professor recebe o que fazer, não só o que aconteceu. “Pulseira desligada” aparece como estado neutro, nunca como falha do aluno.</p>
+  </div>
+
+  <div class="note">
+    <span class="tag">Decisão de UI</span>
+    <p>Note o que o alerta <b>não</b> mostra: “BPM 155, GSR 4.8”. Número biométrico bruto não informa decisão pedagógica e empurra o professor para uma leitura clínica que ele não tem formação para fazer. O dado continua disponível na tela de detalhe, para quem precisar auditar.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s10">
+  <span class="sec-num">11</span>
+  <h2>Wireframes — Responsável</h2>
+  <div class="col">
+    <p>O responsável usa no celular, quase sempre fora da escola e frequentemente ansioso. A tela precisa responder “meu filho está bem?” antes de qualquer outra coisa — e o kit de apoio é onde ele exerce agência real.</p>
+  </div>
+
+  <div class="wf">
+    <svg viewBox="0 0 900 430" role="img" aria-label="Tela do responsável com resumo do filho e kit de apoio">
+      <rect x="0" y="0" width="900" height="430" rx="10" class="s-white"/>
+      <rect x="0" y="0" width="900" height="430" rx="10" class="s-line"/>
+
+      <rect x="286" y="18" width="328" height="394" rx="20" class="s-fill"/>
+      <rect x="286" y="18" width="328" height="394" rx="20" class="s-line"/>
+
+      <text x="310" y="52" class="t-lg">Ana Sofia</text>
+      <text x="310" y="70" class="t-sm">3º Ano B · Prof. Carla Souza</text>
+
+      <!-- resumo do dia -->
+      <rect x="310" y="86" width="280" height="76" rx="12" style="fill:var(--good-soft)"/>
+      <text x="330" y="114" class="t-lg">Dia tranquilo até agora</text>
+      <text x="330" y="136" class="t-sm">Ela marcou “bem” de manhã e</text>
+      <text x="330" y="150" class="t-sm">pediu uma pausa às 10:14.</text>
+
+      <!-- semana -->
+      <text x="310" y="186" class="t">Últimos 7 dias</text>
+      <g>
+        <rect x="310" y="196" width="30" height="34" rx="5" style="fill:var(--good-soft)"/><text x="318" y="244" class="t-sm">seg</text>
+        <rect x="348" y="196" width="30" height="34" rx="5" style="fill:var(--good-soft)"/><text x="357" y="244" class="t-sm">ter</text>
+        <rect x="386" y="196" width="30" height="34" rx="5" style="fill:var(--warn-soft)"/><text x="395" y="244" class="t-sm">qua</text>
+        <rect x="424" y="196" width="30" height="34" rx="5" style="fill:var(--good-soft)"/><text x="433" y="244" class="t-sm">qui</text>
+        <rect x="462" y="196" width="30" height="34" rx="5" style="fill:var(--crit-soft)"/><text x="471" y="244" class="t-sm">sex</text>
+        <rect x="500" y="196" width="30" height="34" rx="5" style="fill:var(--surface-sunken)"/><text x="510" y="244" class="t-sm">sáb</text>
+        <rect x="538" y="196" width="30" height="34" rx="5" style="fill:var(--good-soft)"/><text x="548" y="244" class="t-sm">seg</text>
+      </g>
+
+      <!-- kit -->
+      <line x1="310" y1="264" x2="590" y2="264" class="s-line"/>
+      <text x="310" y="292" class="t">Kit de apoio</text>
+      <text x="310" y="310" class="t-sm">O que ajuda a Ana quando ela precisa</text>
+
+      <rect x="310" y="322" width="280" height="42" rx="8" class="s-white"/><rect x="310" y="322" width="280" height="42" rx="8" class="s-line"/>
+      <text x="326" y="349" style="font-size:15px">🎧</text>
+      <text x="352" y="342" class="t-sm">Fone abafador</text>
+      <text x="352" y="357" class="t-sm" style="fill:var(--good)">usado 3× esta semana</text>
+
+      <rect x="310" y="372" width="280" height="28" rx="8" class="s-acc-soft"/>
+      <text x="326" y="391" class="t-sm" style="fill:var(--accent)">+ Adicionar estratégia que funciona em casa</text>
+
+      <text x="24" y="120" class="t-mono">LINGUAGEM</text>
+      <text x="24" y="138" class="t-sm">“Dia tranquilo”, não</text>
+      <text x="24" y="152" class="t-sm">“0 episódios de crise”.</text>
+      <text x="24" y="166" class="t-sm">Sem estética de</text>
+      <text x="24" y="180" class="t-sm">prontuário médico.</text>
+
+      <text x="24" y="230" class="t-mono">SEM GRÁFICO</text>
+      <text x="24" y="248" class="t-sm">Faixas de cor, não linha</text>
+      <text x="24" y="262" class="t-sm">de BPM. O responsável</text>
+      <text x="24" y="276" class="t-sm">não é clínico e não deve</text>
+      <text x="24" y="290" class="t-sm">interpretar biometria.</text>
+
+      <text x="640" y="330" class="t-mono">AGÊNCIA</text>
+      <text x="640" y="348" class="t-sm">O kit é onde a família</text>
+      <text x="640" y="362" class="t-sm">contribui com o que só</text>
+      <text x="640" y="376" class="t-sm">ela sabe — e isso volta</text>
+      <text x="640" y="390" class="t-sm">para a tela do aluno.</text>
+      <line x1="592" y1="338" x2="636" y2="338" class="s-line" stroke-dasharray="3 3"/>
+    </svg>
+    <p class="wf-cap"><b>Meu filho.</b> O ciclo se fecha aqui: a estratégia que a família cadastra aparece para a criança na tela de pausa e para o professor no alerta. É o “suporte colaborativo família-escola” do título do artigo, materializado em interface.</p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s11">
+  <span class="sec-num">12</span>
+  <h2>Riscos e decisões pendentes</h2>
+
+  <div class="grid g2">
+    <div class="card">
+      <span class="k">Precisa de decisão sua</span>
+      <h4>Login do aluno</h4>
+      <p>E-mail e senha exclui criança em alfabetização. Alternativas: QR pelo professor, PIN por sequência de imagens, ou sessão em dispositivo confiável. <b>Exige rota nova no backend.</b></p>
+    </div>
+    <div class="card">
+      <span class="k">Resolvido</span>
+      <h4>“Preciso de pausa”</h4>
+      <p>Implementado: seis rotas, estratégias vindas do kit de apoio, ordenação por eficácia, notificação ao professor e pedido sem escolha obrigatória.</p>
+    </div>
+    <div class="card">
+      <span class="k">Risco de pesquisa</span>
+      <h4>Discordância como dado</h4>
+      <p>Se a criança puder dizer “não foi isso que eu senti” quando o modelo aponta crise, isso gera rótulo de correção — valiosíssimo para a Fase 2 e potencialmente um diferencial do artigo. Também aumenta o escopo.</p>
+    </div>
+    <div class="card">
+      <span class="k">Risco ético · em aberto</span>
+      <h4>Notificação ao responsável</h4>
+      <p>Avisar a família em tempo real de cada desregulação pode virar vigilância e gerar consequência para a criança em casa. Sugiro resumo diário por padrão, tempo real só com acordo explícito dos três lados.</p>
+    </div>
+    <div class="card">
+      <span class="k">Parcialmente resolvido</span>
+      <h4>Assentimento da criança</h4>
+      <p>O consentimento do responsável está implementado e auditável. Falta o assentimento da própria criança em linguagem simples — padrão ouro em pesquisa com menores (CEP/CONEP) e reforço direto ao pilar <i>Dignity</i>.</p>
+    </div>
+    <div class="card">
+      <span class="k">Limite técnico</span>
+      <h4>Modelo TEA-only</h4>
+      <p>A UI cobre neurodivergência ampla; o classificador, não. Precisa estar explícito no artigo e na interface de quem configura o sistema.</p>
+    </div>
+    <div class="card">
+      <span class="k">Dívida conhecida</span>
+      <h4>GSR ausente</h4>
+      <p>A pulseira não envia GSR — o modelo opera com uma das três features nula em produção. Afeta a confiança exibida no alerta do professor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<section id="s12">
+  <span class="sec-num">13</span>
+  <h2>Roteiro sugerido</h2>
+  <div class="col">
+    <p>Ordenado por dependência, não por facilidade. Cada etapa entrega algo verificável.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th style="width:8%">Etapa</th><th style="width:38%">Entrega</th><th style="width:54%">Por que nesta ordem</th></tr></thead>
+      <tbody>
+        <tr><td class="num"><b>1</b></td><td>Esqueleto + design system + painel de conforto</td><td>Os tokens adaptáveis precisam existir antes de qualquer tela, senão todo componente nasce para ser refeito.</td></tr>
+        <tr><td class="num"><b>2</b></td><td>Login e cliente de API tipado</td><td>Destrava todo o resto. Tipos gerados do <code>swagger.json</code>.</td></tr>
+        <tr><td class="num"><b>3</b></td><td>Onboarding do responsável: consentimento + perfil funcional</td><td>É a porta de entrada legal e técnica. Sem consentimento o backend bloqueia tudo; sem perfil, a tela do aluno não sabe como se apresentar. <b>API pronta.</b></td></tr>
+        <tr><td class="num"><b>4</b></td><td>App do aluno</td><td>O de maior risco de design e o que nunca existiu. Fazer por último seria descobrir tarde demais o que não funciona. <b>API pronta</b>, incluindo pausa e painel de conforto.</td></tr>
+        <tr><td class="num"><b>5</b></td><td>Painel do professor</td><td>Consome pedidos de pausa e alertas, já respeitando consentimento.</td></tr>
+        <tr><td class="num"><b>6</b></td><td>App do responsável e kit de apoio</td><td>Fecha o ciclo família-escola: o que a família cadastra chega à criança e ao professor.</td></tr>
+        <tr><td class="num"><b>7</b></td><td>Comunicação: mensagens, fórum, notificações</td><td>Transversal; nenhuma outra tela depende dele.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="tag">Estado atual</span>
+    <p>O backend das etapas 3, 4 e 5 <b>já está implementado e testado</b> — 125 rotas, 182 testes verdes em MongoDB real e mongomock. A única dependência de backend remanescente é o <b>login acessível para o aluno</b>, que continua aguardando sua decisão.</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Fontes consultadas.</b> W3C — <i>Supplemental Guidance for Cognitive Accessibility</i> e <i>Making Content Usable for People with Cognitive and Learning Disabilities</i>; framework DAD (Data, Autonomy, Dignity) em crítica à tecnologia de vigilância para autismo; revisão de escopo sobre interação humano-IA adaptativa para usuários neurodivergentes (Taylor &amp; Francis, 2025); revisão do programa <i>Zones of Regulation</i> (Mason, Leaf &amp; Gerhardt, 2024) — usada como referência negativa, por não atender aos critérios de prática baseada em evidência; literatura sobre aplicativos de regulação emocional para inclusão escolar de crianças com TEA (ACM SIGACCESS / Computers &amp; Education).</p>
+  <p>Inventário de telas derivado das 108 rotas ativas da API CogniKids em 26 jul 2026.</p>
+</footer>
+
+</div>

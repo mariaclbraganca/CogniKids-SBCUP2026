@@ -1,252 +1,110 @@
 <div align="center">
 
-<img src="cognikids-front-end/assets/images/logo%20CogniKids.png" alt="CogniKids — Logo Oficial" width="220"/>
-
 # CogniKids
 
-### Sinergia entre IoT e Inteligência Artificial para o Suporte Colaborativo Família-Escola na Educação Inclusiva
+**Sinergia entre IoT e Inteligência Artificial para o Suporte Colaborativo Família-Escola na Educação Inclusiva**
 
 [![License: PolyForm NC 1.0.0](https://img.shields.io/badge/License-PolyForm%20NC%201.0.0-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://www.docker.com/)
 [![MQTT](https://img.shields.io/badge/MQTT-Mosquitto-660066.svg)](https://mosquitto.org/)
-[![Redis](https://img.shields.io/badge/Redis-Buffer-DC382D.svg?logo=redis&logoColor=white)](https://redis.io/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Persistence-47A248.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B.svg?logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![SBCUP](https://img.shields.io/badge/Paper-SBCUP%202026%20(no%20prelo)-brightgreen.svg)]()
-[![Status](https://img.shields.io/badge/Status-Fase%201%20%7C%20Prova%20de%20Conceito-orange.svg)]()
-
-> Repositório oficial com o código-fonte da Prova de Conceito (PoC) referente ao artigo
-> aceito para apresentação no **Simpósio Brasileiro de Computação Ubíqua e Pervasiva (SBCUP) 2026**.
+[![Redis](https://img.shields.io/badge/Redis-DC382D.svg?logo=redis&logoColor=white)](https://redis.io/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Status](https://img.shields.io/badge/Status-Fase%201%20%7C%20PoC%20conclu%C3%ADda-orange.svg)](.)
 
 </div>
 
 ---
 
-## Sumário
+Este repositório guarda o código-fonte da Fase 1 do CogniKids, uma prova de conceito de plataforma educacional e terapêutica para crianças neurodivergentes (TEA, TDAH e Dislexia) que conecta professor, família e aluno em torno de dados reais de comportamento e aprendizagem.
 
-- [Resumo](#resumo)
-- [Status do Projeto](#status-do-projeto)
-- [Resultados Obtidos](#resultados-obtidos)
-- [Arquitetura da Solução](#arquitetura-da-solução)
-- [Estrutura do Repositório](#estrutura-do-repositório)
-- [Considerações Éticas](#considerações-éticas)
-- [Reprodutibilidade](#reprodutibilidade)
-- [Material Complementar](#material-complementar)
-- [Como Citar](#como-citar)
-- [Licença](#licença)
-- [Autores](#autores)
+A Fase 1 foi **concluída, validada tecnicamente e reconhecida com 3º Melhor Artigo no SBCUP 2026** (taxa de aceitação de 48,6%). O repositório está preservado como estava na submissão do artigo, porque mexer no código agora alteraria o que foi avaliado pelos revisores, e isso não faz sentido. As evoluções do projeto estão acontecendo no [repositório da Fase 2](https://github.com/mariaclbraganca/cognikids-motor-curricular), em paralelo, enquanto a validação com crianças reais aguarda aprovação do Comitê de Ética (CEP/CONEP).
 
 ---
 
-## Resumo
+## O problema que motivou o projeto
 
-Este projeto avalia a viabilidade técnica do **CogniKids**, uma Prova de Conceito baseada em **IoT pervasiva** para o monitoramento contínuo de estados emocionais de estudantes neurodivergentes. Fundamentado no paradigma da **Computação Ubíqua**, o sistema utiliza uma arquitetura distribuída orientada a eventos, com sensores vestíveis não intrusivos e Aprendizado de Máquina para detecção contextualizada de crises de desregulação emocional.
+O professor escreve uma única atividade para a turma inteira, mas cada criança processa informação de um jeito diferente. Uma criança com TEA pode entrar em crise de desregulação emocional antes que o professor perceba que algo está errado, porque os sinais são sutis, acontecem rápido e o professor está atendendo 30 alunos ao mesmo tempo.
 
-A solução foi concebida como ponte tecnológica entre o ambiente escolar e familiar, fornecendo aos educadores informações sensíveis ao contexto que apoiam intervenções pedagógicas oportunas, sem interromper o fluxo de aprendizagem.
-
----
-
-## Status do Projeto
-
-> **Este repositório corresponde à Fase 1 do projeto CogniKids — Prova de Conceito (PoC) e validação técnica em ambiente de simulação estocástica.**
-
-| Item                       | Situação                                                                                  |
-|----------------------------|-------------------------------------------------------------------------------------------|
-| **Artigo Científico**      | Aceito (*in press*) — apresentação prevista para **julho de 2026** no SBCUP 2026.        |
-| **Fase Atual**             | **Fase 1** — viabilidade técnica e arquitetural com dados sintéticos.                     |
-| **Fase 2 (planejada)**     | Validação clínica supervisionada com aprovação de Comitê de Ética (CEP/CONEP).            |
-| **Fase 3 (planejada)**     | Implantação piloto em ambiente escolar inclusivo e estudo longitudinal.                   |
-
-A divisão em fases segue uma estratégia incremental: a Fase 1 demonstra a sustentação tecnológica do sistema (latência, escalabilidade, acurácia preditiva); as fases subsequentes endereçarão a coleta de dados reais sob protocolo ético e a avaliação do impacto pedagógico em campo.
+O que o CogniKids tenta fazer é detectar esses sinais antes que a crise se instale, usando sensores biométricos vestíveis e um modelo de ML, e entregar esse sinal ao professor com latência baixa o suficiente para que uma intervenção ainda seja possível.
 
 ---
 
-## Resultados Obtidos
+## O que foi validado na Fase 1
 
-| Métrica                          | Valor                | Descrição                                                |
-|----------------------------------|----------------------|----------------------------------------------------------|
-| Acurácia do Modelo               | **85%**              | Random Forest aplicado a dados sintéticos (TEA)          |
-| Revocação (*Recall*)             | **84%**              | Capacidade de recuperar episódios de crise               |
-| Latência média do *backend*      | **50,27 ms**         | Sob carga de 50.000 registros simulados                  |
-| Volume de dados validados        | 50.000+ registros    | Geração estocástica baseada em literatura médica         |
+| Métrica | Resultado |
+|--------|-----------|
+| Acurácia do modelo | 85% |
+| Recall (crises detectadas) | 84% |
+| Latência média do backend | 50,27 ms |
+| Volume de dados testados | 50.000+ registros sintéticos |
 
-> Os resultados confirmam a **viabilidade técnica** de um suporte contínuo, escalável e de baixa latência, adequado ao ambiente escolar inclusivo.
+Os dados são sintéticos porque validar com crianças reais requer aprovação ética prévia, e isso é exatamente o que está em andamento para a Fase 2. O modelo foi treinado com dados gerados a partir de literatura médica sobre padrões biométricos em crianças com TEA.
 
 ---
 
-## Arquitetura da Solução
+## Arquitetura
 
-A arquitetura técnica foi estruturada em **quatro camadas desacopladas**, garantindo escalabilidade horizontal, baixa latência e tolerância a falhas:
+O sistema foi dividido em quatro camadas desacopladas, cada uma com responsabilidade única, para que uma falha em qualquer parte não derrube o pipeline inteiro:
 
 ```
-┌──────────────────────────┐
-│ 1. Percepção (IoT)       │  Pulseira M5StickC + sensores biométricos (BPM, GSR, Acelerômetro)
-└────────────┬─────────────┘
-             │  MQTT/TLS (Mosquitto)
-             ▼
-┌──────────────────────────┐
-│ 2. Comunicação & Buffer  │  Bridge Python → Cluster Redis (buffer elástico)
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│ 3. Inteligência (ML)     │  Worker Python + Random Forest (scikit-learn) → MongoDB
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│ 4. Aplicação (Dashboard) │  Streamlit (alertas, gráficos, monitoramento em tempo real)
-└──────────────────────────┘
+Pulseira M5StickC (BPM + GSR + Acelerômetro)
+        |
+        | MQTT/TLS (Mosquitto)
+        ↓
+Bridge Python → Redis (buffer elástico)
+        |
+        ↓
+Worker Python + Random Forest (scikit-learn) → MongoDB
+        |
+        ↓
+Dashboard Streamlit (alertas em tempo real + relatórios)
 ```
 
-### 1. Camada de Percepção (IoT)
-Sensores vestíveis (*wearables*) monitoram parâmetros biométricos e comportamentais essenciais:
-- **Frequência Cardíaca (BPM)**
-- **Condutância Galvânica da Pele (GSR)**
-- **Índice de Movimento (Acelerômetro)**
-
-A transmissão é feita via protocolo **MQTT** através do *broker* Mosquitto com suporte **TLS**, visando segurança e baixo *overhead* energético.
-
-### 2. Camada de Comunicação e Buffer
-Um serviço de ponte (*bridge*) em Python consome as mensagens MQTT e as enfileira em um cluster **Redis**, atuando como *buffer* elástico que **desacopla a ingestão assíncrona** dos sensores do processamento de inferência.
-
-### 3. Camada de Processamento e Inteligência (Machine Learning)
-Um *worker* consome os dados em memória e aplica o modelo pré-treinado **Random Forest** (`scikit-learn`) para predição em tempo real de crises de desregulação emocional. Os logs brutos e os resultados classificados são persistidos no **MongoDB**, viabilizando rastreabilidade e estudos longitudinais.
-
-### 4. Camada de Aplicação (Dashboard)
-Interface sensível ao contexto desenvolvida em **Streamlit**, fornecendo aos educadores:
-- Monitoramento em tempo real;
-- Emissão de alertas sonoros e visuais;
-- Gráficos de tendências comportamentais;
-- Relatórios de evolução por aluno.
+A decisão de usar Redis como buffer entre a ingestão MQTT e o processamento ML não foi estética: ela desacopla os dois fluxos de forma que picos de leitura dos sensores não afetem a latência das predições, e o sistema continua funcionando se o worker cair e voltar depois.
 
 ---
 
-## Estrutura do Repositório
+## Estrutura do repositório
 
 ```
-CogniKids/
-├── cognikids-backend/              # API Flask, brokers, workers e infraestrutura Docker
-│   ├── app/                        # Controllers, Models, Views, Utils
-│   ├── docker-compose.yml          # MongoDB + Redis + Mosquitto + API
-│   ├── mqtt_to_redis_bridge.py     # Bridge MQTT -> Redis
-│   ├── alert_monitor.py            # Worker de inferência (Random Forest)
-│   └── scripts/                    # Seeds, demos e utilitários
-│
-├── cognikids-front-end/            # Dashboard Streamlit para educadores
-│   ├── app.py
-│   ├── modules/                    # Login, Dashboard, Atividades, Relatórios
-│   └── assets/
-│
-├── cognikids-pulseira-m5stack/     # Firmware MicroPython (M5StickC)
-│   ├── boot.py
-│   ├── main.py
-│   └── config.example.py
-│
-└── docs/data-science/              # Notebooks, EDA e visualizações do artigo
-    ├── Analise_EDA.ipynb
-    ├── Apresentacao_CRISP-DM.md
-    ├── confusion_matrix.png
-    ├── feature_importance.png
-    └── roc_curve.png
+cognikids-backend/          ← API Python (Flask), modelos, controllers, testes
+cognikids-front-end/        ← Dashboard Streamlit
+cognikids-pulseira-m5stack/ ← Firmware MicroPython para o wearable
+cognikids-adapt/            ← Motor de Adaptação Curricular (Fase 2, em desenvolvimento)
+docs/                       ← Arquitetura, ADRs, roadmap e documentação CRISP-DM
 ```
 
 ---
 
-## Considerações Éticas
+## Considerações éticas
 
-Devido às restrições éticas rigorosas atreladas à coleta de dados biométricos de **menores de idade** — conforme estabelecido pela **LGPD (Lei nº 13.709/2018)** e por princípios bioéticos —, a validação desta Prova de Conceito foi integralmente conduzida em um **ambiente de simulação estocástica**.
+O projeto lida com dados de crianças e com sinais biométricos, dois contextos que exigem cuidado além do técnico. Toda a validação da Fase 1 foi feita com dados sintéticos por isso: não é possível coletar dados reais de crianças sem aprovação prévia de Comitê de Ética, e aplicar o sistema sem essa aprovação seria irresponsável, independentemente de quão bem o modelo performa.
 
-Todos os dados biométricos utilizados para o treinamento dos modelos e aferição de latência da rede são **sintéticos**, gerados a partir de padrões descritos na literatura médica para o **Transtorno do Espectro Autista (TEA)**.
-
-> **Nenhum dado real de menores foi coletado, processado ou armazenado nesta etapa de pesquisa.**
+A Fase 2 está condicionada a essa aprovação. Enquanto isso, o desenvolvimento do Motor de Adaptação Curricular avança em paralelo com datasets públicos de comportamento educacional (ASSISTments, EdNet), porque esses dados já são anonimizados e autorizados para pesquisa.
 
 ---
 
-## Reprodutibilidade
+## Como reproduzir
 
-Para reproduzir a arquitetura descrita no artigo:
-
-### Pré-requisitos
-- [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/install/)
-- [Python 3.9+](https://www.python.org/downloads/)
-- (Opcional) Pulseira **M5StickC** com firmware **MicroPython**
-
-### 1. Iniciar Infraestrutura e Backend
-Inicializa os contêineres do MongoDB, Redis, *Broker* MQTT e a API Flask:
 ```bash
-cd cognikids-backend
+git clone https://github.com/mariaclbraganca/cognikids
+cd cognikids
 cp .env.example .env
-docker-compose up -d
+docker-compose up
 ```
 
-### 2. Iniciar o Dashboard (Frontend)
-Sobe a interface visual de monitoramento em Streamlit:
-```bash
-cd cognikids-front-end
-pip install -r requirements.txt
-streamlit run app.py
-```
-A aplicação será disponibilizada em `http://localhost:8501`.
-
-### 3. Simulação IoT (Hardware Opcional)
-O firmware em **MicroPython** para os *wearables* encontra-se em `cognikids-pulseira-m5stack/`.
-Renomeie `config.example.py` para `config.py` e edite as credenciais do *broker* MQTT em execução.
-
-### 4. Verificação
-```bash
-curl http://localhost:5001/api/status
-```
-Documentação interativa da API: `http://localhost:5001/docs`
-
----
-
-## Material Complementar
-
-| Recurso                                | Localização                                          |
-|----------------------------------------|------------------------------------------------------|
-| Análise Exploratória (EDA)             | [`docs/data-science/Analise_EDA.ipynb`](docs/data-science/Analise_EDA.ipynb) |
-| Metodologia CRISP-DM                   | [`docs/data-science/Apresentacao_CRISP-DM.md`](docs/data-science/Apresentacao_CRISP-DM.md) |
-| Matriz de Confusão                     | [`docs/data-science/confusion_matrix.png`](docs/data-science/confusion_matrix.png) |
-| Importância das *Features*             | [`docs/data-science/feature_importance.png`](docs/data-science/feature_importance.png) |
-| Curva ROC                              | [`docs/data-science/roc_curve.png`](docs/data-science/roc_curve.png) |
-| Distribuição de Latência               | [`docs/data-science/latencia_distribuicao_real.png`](docs/data-science/latencia_distribuicao_real.png) |
-
----
-
-## Como Citar
-
-> **Aviso:** o artigo foi **aceito** para o SBCUP 2026, mas ainda **não foi publicado nos anais oficiais** (apresentação prevista para julho de 2026). Até a publicação dos anais pela SBC, recomenda-se utilizar a referência abaixo na forma *"no prelo / a aparecer (in press)"*. Esta entrada será atualizada com volume, páginas e DOI assim que os anais forem disponibilizados.
-
-```bibtex
-@inproceedings{braganca2026cognikids,
-  title     = {CogniKids: Sinergia entre IoT e Intelig{\^e}ncia Artificial para o Suporte Colaborativo Fam{\'\i}lia-Escola na Educa{\c{c}}{\~a}o Inclusiva},
-  author    = {Di Bragan{\c{c}}a, Maria Clara Ribeiro and Rosa, Frederico Lemes and Santos, Willgnner Ferreira and Alves, Alisson Rodrigues},
-  booktitle = {Anais do Simp{\'o}sio Brasileiro de Computa{\c{c}}{\~a}o Ub{\'\i}qua e Pervasiva (SBCUP)},
-  year      = {2026},
-  organization = {SBC},
-  note      = {No prelo / In press}
-}
-```
-
----
-
-## Licença
-
-Distribuído sob a **PolyForm Noncommercial License 1.0.0**.
-
-Esta licença permite **uso acadêmico, científico, educacional e de pesquisa** — incluindo replicação, modificação e estudos derivados —, mas **proíbe expressamente o uso comercial**. Consulte o arquivo [`LICENSE`](LICENSE) ou o [texto oficial da licença](https://polyformproject.org/licenses/noncommercial/1.0.0/) para mais informações.
-
-> **Para uso comercial**, entre em contato com os autores para negociação de licença específica.
+Os scripts de seed para popular o banco com dados sintéticos estão em `cognikids-backend/scripts/seeds/`.
 
 ---
 
 ## Autores
 
-| Autor(a)                            | Filiação                                       |
-|-------------------------------------|------------------------------------------------|
-| **Maria Clara Ribeiro Di Bragança** | Faculdade SENAI Fatesg — Goiânia, GO, Brasil   |
-| **Frederico Lemes Rosa**            | Faculdade SENAI Fatesg — Goiânia, GO, Brasil   |
-| **Willgnner Ferreira Santos**       | Faculdade SENAI Fatesg — Goiânia, GO, Brasil   |
-| **Alisson Rodrigues Alves**         | Faculdade SENAI Fatesg — Goiânia, GO, Brasil   |
+**Maria Clara Ribeiro Di Bragança** — pesquisadora principal, desenvolvimento e validação
+**Orientação:** SENAI FATESG, Goiânia, GO
+
+Artigo publicado nos *Anais do SBCUP 2026*. Para citar o projeto, consulte o artigo completo.
+
+---
+
+> A Fase 2 está em desenvolvimento em [cognikids-motor-curricular](https://github.com/mariaclbraganca/cognikids-motor-curricular).

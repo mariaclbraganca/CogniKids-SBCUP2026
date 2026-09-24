@@ -88,8 +88,8 @@ A Fase 2 está condicionada a essa aprovação. Enquanto isso, o desenvolvimento
 ## Como reproduzir
 
 ```bash
-git clone https://github.com/mariaclbraganca/cognikids
-cd cognikids
+git clone https://github.com/mariaclbraganca/CogniKids-SBCUP2026
+cd CogniKids-SBCUP2026
 cp .env.example .env
 docker-compose up
 ```
